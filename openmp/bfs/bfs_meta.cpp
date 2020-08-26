@@ -129,10 +129,11 @@ void BFSGraph( int argc, char** argv)
 
 #ifdef OPEN
             //omp_set_num_threads(num_omp_threads);
-    #ifdef OMP_OFFLOAD
+/*    #ifdef OMP_OFFLOAD
     #pragma omp target
     #endif
-    #pragma omp parallel for
+    #pragma omp parallel for */
+#pragma omp metadirective when(user={condition(OMP_OFFLOAD>0)}: target parallel for) default(parallel for)
 #endif 
             for(int tid = 0; tid < no_of_nodes; tid++ )
             {
@@ -151,9 +152,10 @@ void BFSGraph( int argc, char** argv)
             }
 
 #ifdef OPEN
-    #ifdef OMP_OFFLOAD
+    /*#ifdef OMP_OFFLOAD
     #pragma omp target data map(stop)
-    #endif
+    #endif*/
+#pragma omp metadirective when(user={condition(OMP_OFFLOAD>0)}: target parallel for map(stop)) default(parallel for)
 #endif
             for(int tid=0; tid< no_of_nodes ; tid++ )
             {

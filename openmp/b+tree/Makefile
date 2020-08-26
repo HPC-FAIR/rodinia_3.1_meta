@@ -1,4 +1,4 @@
-C_C = gcc
+C_C = clang
 OMP_LIB = -lgomp
 OMP_FLAG = -fopenmp
 
@@ -6,12 +6,14 @@ OMP_FLAG = -fopenmp
 #	EXECUTABLES (LINK OBJECTS TOGETHER INTO BINARY)
 # ========================================================================================================================================================================================================200
 
+all: b+tree.out b+tree_meta.out
+
 b+tree.out:	./main.o \
 		./kernel/kernel_cpu.o \
 		./kernel/kernel_cpu_2.o \
 		./util/timer/timer.o \
 		./util/num/num.o
-	$(C_C)	./main.o \
+	$(C_C) $(OMP_FLAG)	./main.o \
 			./kernel/kernel_cpu.o \
 			./kernel/kernel_cpu_2.o \
 			./util/timer/timer.o \
@@ -19,6 +21,20 @@ b+tree.out:	./main.o \
 			-lm \
 			$(OMP_LIB) \
                         -o b+tree.out
+
+b+tree_meta.out:	./main.o \
+		./kernel/kernel_cpu_meta.o \
+		./kernel/kernel_cpu_2_meta.o \
+		./util/timer/timer.o \
+		./util/num/num.o
+	$(C_C) $(OMP_FLAG)	./main.o \
+			./kernel/kernel_cpu_meta.o \
+			./kernel/kernel_cpu_2_meta.o \
+			./util/timer/timer.o \
+			./util/num/num.o \
+			-lm \
+			$(OMP_LIB) \
+                        -o b+tree_meta.out
 # ========================================================================================================================================================================================================200
 #	OBJECTS (COMPILE SOURCE FILES INTO OBJECTS)
 # ========================================================================================================================================================================================================200
@@ -30,7 +46,7 @@ b+tree.out:	./main.o \
 main.o:	./common.h \
 		./main.h \
 		./main.c
-	$(C_C)	./main.c \
+	$(C_C) $(OMP_FLAG)	./main.c \
 			-c \
 			-o ./main.o \
 			-O3
@@ -86,7 +102,7 @@ main.o:	./common.h \
 # ========================================================================================================================================================================================================200
 
 clean:
-	rm	*.o *.out \
+	rm -f	*.o *.out \
 		./kernel/*.o \
 		./util/timer/*.o \
 		./util/num/*.o \
