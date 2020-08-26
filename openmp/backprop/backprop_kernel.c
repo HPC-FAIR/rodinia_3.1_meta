@@ -23,7 +23,7 @@ extern float **alloc_2d_dbl(int m, int n);
 
 extern float squash(float x);
 
-double gettime() {
+long long gettime() {
   struct timeval t;
   gettimeofday(&t,NULL);
   return t.tv_sec+t.tv_usec*1e-6;
@@ -35,7 +35,9 @@ double gettime() {
 int
 main( int argc, char** argv) 
 {
-	setup(argc, argv);
+  double t = gettime();
+  setup(argc, argv);
+  printf("Total time = %ds\n", gettime()-t);
 }
 
 
