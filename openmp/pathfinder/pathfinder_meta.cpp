@@ -96,7 +96,7 @@ void run(int argc, char** argv)
         src = dst;
         dst = temp;
         int n;
-        #pragma omp parallel for private(min,n)
+        #pragma omp metadirective when(user={condition(cols>100)}: parallel for private(min,n))
         for(n = 0; n < cols; n++){
           min = src[n];
           if (n > 0)
