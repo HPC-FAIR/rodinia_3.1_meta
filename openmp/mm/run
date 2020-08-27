@@ -1,0 +1,2 @@
+time ./mm_offload 500
+time ./mm_meta 500
