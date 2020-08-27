@@ -1,0 +1,2 @@
+time ./gs_offload 4096 > /dev/null
+time ./gs_meta 4096 > /dev/null
