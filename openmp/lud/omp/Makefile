@@ -12,11 +12,11 @@ PROFILE        := NO
 EXECUTABLE      := lud_omp
 
 # ------------  list of all source files  --------------------------------------
-SOURCES         := lud.c lud_omp.c ../common/common.c 
+SOURCES         := lud.c lud_omp.c ../common/common.c
 
 # ------------  compiler  ------------------------------------------------------
-CC              := gcc
-CXX             := g++
+CC              := clang
+CXX             := clang++
 
 # ------------  compiler flags  ------------------------------------------------
 DEBUG_CFLAGS    := -Wall -O0 -g
@@ -89,12 +89,17 @@ BASENAMES       = $(basename $(SOURCES))
 OBJECTS         = $(addsuffix .o,$(BASENAMES))
  
 # ------------  make the executable (the default goal)  ------------------------
+all: lud_omp lud_meta
+
 $(EXECUTABLE):	$(OBJECTS)
 ifeq ($(strip $(CPP_SOURCES)),)
 	$(CC)  $(ALL_LFLAGS) -o $(EXECUTABLE) $(OBJECTS) $(LOCAL_LIBSS) $(GLOBAL_LIBSS) $(SYS_LIBS)
 else
 	$(CXX) $(ALL_LFLAGS) -o $(EXECUTABLE) $(OBJECTS) $(LOCAL_LIBSS) $(GLOBAL_LIBSS) $(SYS_LIBS)
 endif
+
+lud_meta: lud.o lud_meta.o ../common/common.o 
+	$(CC) $(ALL_LFLAGS) -o lud_meta lud.o lud_meta.o ../common/common.o   -lm 
 
 # ------------  make the objects  ----------------------------------------------
 %.o:		%.c
@@ -110,7 +115,7 @@ endif
 				$(CXX) -c $(ALL_CFLAGS) $< -o $@
 
 clean:
-	-rm --force $(EXECUTABLE) $(OBJECTS) *~
+	-rm --force $(EXECUTABLE) $(OBJECTS) *~ lud_meta lud_meta.o
 
 .PHONY: clean
 
