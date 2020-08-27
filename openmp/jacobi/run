@@ -1,0 +1,2 @@
+time ./jacobi_offload 2000 
+time ./jacobi_meta 2000 
