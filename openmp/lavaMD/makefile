@@ -10,7 +10,9 @@ ifdef OUTPUT
 override OUTPUT = -DOUTPUT
 endif
 
-C_C = gcc
+all: a.out meta
+
+C_C = clang
 OMP_LIB = -lgomp
 OMP_FLAG = -fopenmp
 
@@ -24,8 +26,19 @@ a.out:		main.o \
 			./util/num/num.o \
 			./util/timer/timer.o \
 			-lm \
-			$(OMP_LIB) \
+			$(OMP_LIB) ${OMP_FLAG} \
 			-o lavaMD
+meta:		main.o \
+			./kernel/kernel_cpu_meta.o \
+			./util/num/num.o \
+			./util/timer/timer.o
+	$(C_C)	main.o \
+			./kernel/kernel_cpu_meta.o \
+			./util/num/num.o \
+			./util/timer/timer.o \
+			-lm \
+			$(OMP_LIB) ${OMP_FLAG} \
+			-o lavaMD_meta
 # compile function files into objects (binaries)
 main.o:		main.h \
 			main.c \
@@ -48,6 +61,14 @@ main.o:		main.h \
 						-O3 \
 						$(OMP_FLAG)
 
+./kernel/kernel_cpu_meta.o:	./kernel/kernel_cpu.h \
+						./kernel/kernel_cpu_meta.c
+	$(C_C)				./kernel/kernel_cpu_meta.c \
+						-c \
+						-o ./kernel/kernel_cpu_meta.o \
+						-O3 \
+						$(OMP_FLAG)
+
 ./util/num/num.o:	./util/num/num.h \
 					./util/num/num.c
 	$(C_C)			./util/num/num.c \
@@ -64,9 +85,9 @@ main.o:		main.h \
 
 # delete all object and executable files
 clean:
-	rm	*.o \
+	rm -f	*.o \
 		./kernel/*.o \
 		./util/num/*.o \
 		./util/timer/*.o \
                 ./util/device/*.o \
-		lavaMD
+		lavaMD lavaMD_meta
