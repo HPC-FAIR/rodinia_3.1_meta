@@ -56,6 +56,16 @@ float sqroot(float  n) {
   }
   return mid;
 }
+
+template <typename T>
+void copy(T* dst, T* src, int N)
+{
+	#pragma omp parallel for default(shared) schedule(static)
+	for(int i = 0; i < N; i++)
+	{
+		dst[i] = src[i];
+	}
+}
 #pragma omp end declare target
 
 /*
@@ -72,23 +82,6 @@ void dealloc(T* array)
 {
 	delete[] array;
 }
-
-#ifdef OMP_OFFLOAD
-#pragma omp declare target
-#endif
-template <typename T>
-void copy(T* dst, T* src, int N)
-{
-	#pragma omp parallel for default(shared) schedule(static)
-	for(int i = 0; i < N; i++)
-	{
-		dst[i] = src[i];
-	}
-}
-#ifdef OMP_OFFLOAD
-#pragma omp end declare target
-#endif
-
 
 void dump(float* variables, int nel, int nelr)
 {
@@ -128,9 +121,7 @@ void initialize_variables(int nelr, float* variables, float* ff_variable)
 	}
 }
 
-#ifdef OMP_OFFLOAD
 #pragma omp declare target
-#endif
 inline void compute_flux_contribution(float& density, float3& momentum, float& density_energy, float& pressure, float3& velocity, float3& fc_momentum_x, float3& fc_momentum_y, float3& fc_momentum_z, float3& fc_density_energy)
 {
 	fc_momentum_x.x = velocity.x*momentum.x + pressure;
@@ -368,9 +359,7 @@ void time_step(int j, int nelr, float* old_variables, float* variables, float* s
         }
     }
 }
-#ifdef OMP_OFFLOAD
 #pragma omp end declare target
-#endif
 /*
  * Main function
  */
@@ -473,21 +462,21 @@ int main(int argc, char** argv)
 
 	// these need to be computed the first time in order to compute time step
 	std::cout << "Starting..." << std::endl;
+  int i,j;
 #ifdef _OPENMP
 	double start = omp_get_wtime();
-    #ifdef OMP_OFFLOAD
-        #pragma omp target map(alloc: old_variables[0:(nelr*NVAR)]) map(to: nelr, areas[0:nelr], step_factors[0:nelr], elements_surrounding_elements[0:(nelr*NNB)], normals[0:(NDIM*NNB*nelr)], fluxes[0:(nelr*NVAR)], ff_variable[0:NVAR], ff_flux_contribution_momentum_x, ff_flux_contribution_momentum_y, ff_flux_contribution_momentum_z, ff_flux_contribution_density_energy) map(variables[0:(nelr*NVAR)])
-    #endif
+        //#pragma omp target map(alloc: old_variables[0:(nelr*NVAR)]) map(to: nelr, areas[0:nelr], step_factors[0:nelr], elements_surrounding_elements[0:(nelr*NNB)], normals[0:(NDIM*NNB*nelr)], fluxes[0:(nelr*NVAR)], ff_variable[0:NVAR], ff_flux_contribution_momentum_x, ff_flux_contribution_momentum_y, ff_flux_contribution_momentum_z, ff_flux_contribution_density_energy) map(variables[0:(nelr*NVAR)])
+        #pragma omp metadirective when(device={arch("nvptx64")}: target map(alloc: old_variables[0:(nelr*NVAR)]) map(to: nelr, areas[0:nelr], step_factors[0:nelr], elements_surrounding_elements[0:(nelr*NNB)], normals[0:(NDIM*NNB*nelr)], fluxes[0:(nelr*NVAR)], ff_variable[0:NVAR], ff_flux_contribution_momentum_x, ff_flux_contribution_momentum_y, ff_flux_contribution_momentum_z, ff_flux_contribution_density_energy) map(variables[0:(nelr*NVAR)]))
 #endif
 	// Begin iterations
-	for(int i = 0; i < iterations; i++)
+	for(i = 0; i < iterations; i++)
 	{
-                copy<float>(old_variables, variables, nelr*NVAR);
+    copy<float>(old_variables, variables, nelr*NVAR);
 
 		// for the first iteration we compute the time step
 		compute_step_factor(nelr, variables, areas, step_factors);
 
-		for(int j = 0; j < RK; j++)
+		for(j = 0; j < RK; j++)
 		{
 			compute_flux(nelr, elements_surrounding_elements, normals, variables, fluxes, ff_variable, ff_flux_contribution_momentum_x, ff_flux_contribution_momentum_y, ff_flux_contribution_momentum_z, ff_flux_contribution_density_energy);
 			time_step(j, nelr, old_variables, variables, step_factors, fluxes);

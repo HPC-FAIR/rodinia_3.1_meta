@@ -3,7 +3,7 @@ CUDA_SDK_PATH = /af10/sc5nf/NVIDIA_CUDA_SDK
 OMP_NUM_THREADS = 8
 MIC_OMP_NUM_THREADS = 216
 
-all: euler3d_cpu euler3d_cpu_double pre_euler3d_cpu pre_euler3d_cpu_double euler3d_cpu_offload
+all: euler3d_cpu euler3d_cpu_offload euler3d_cpu_meta
 
 #euler3d: euler3d.cu
 #	nvcc -Xptxas -v -O3 --gpu-architecture=compute_13 --gpu-code=compute_13 euler3d.cu -o euler3d -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib  -lcutil
@@ -12,10 +12,13 @@ all: euler3d_cpu euler3d_cpu_double pre_euler3d_cpu pre_euler3d_cpu_double euler
 #	nvcc -Xptxas -v -O3 --gpu-architecture=compute_13 --gpu-code=compute_13 euler3d_double.cu -o euler3d_double -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib  -lcutil
 
 euler3d_cpu: euler3d_cpu.cpp
-	g++ -O3 -Dblock_length=$(OMP_NUM_THREADS) -fopenmp euler3d_cpu.cpp -o euler3d_cpu
+	clang++ -O3 -Dblock_length=$(OMP_NUM_THREADS) -fopenmp euler3d_cpu.cpp -o euler3d_cpu
 
-euler3d_cpu_offload:
-	icc -g -O3 -DOMP_OFFLOAD -Dblock_length=$(MIC_OMP_NUM_THREADS) -fopenmp -offload-option,mic,compiler,"-no-opt-prefetch" euler3d_cpu.cpp -o euler3d_cpu_offload
+euler3d_cpu_offload: euler3d_cpu.cpp
+	clang++ -g -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -DOMP_OFFLOAD -Dblock_length=216 -lm euler3d_cpu.cpp -o euler3d_cpu_offload
+
+euler3d_cpu_meta: euler3d_cpu_meta.cpp
+	clang++ -g -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -DOMP_OFFLOAD -Dblock_length=216 -lm euler3d_cpu_meta.cpp -o euler3d_cpu_meta
 
 euler3d_cpu_double: euler3d_cpu_double.cpp
 	g++ -O3 -Dblock_length=$(OMP_NUM_THREADS) -fopenmp euler3d_cpu_double.cpp -o euler3d_cpu_double
@@ -27,16 +30,17 @@ euler3d_cpu_double: euler3d_cpu_double.cpp
 #	nvcc -Xptxas -v -O3 --gpu-architecture=compute_13 --gpu-code=compute_13 pre_euler3d_double.cu -o pre_euler3d_double -I$(CUDA_SDK_PATH)/common/inc  -L$(CUDA_SDK_PATH)/lib  -lcutil
 
 pre_euler3d_cpu: pre_euler3d_cpu.cpp
-	g++ -O3 -Dblock_length=$(OMP_NUM_THREADS) -fopenmp pre_euler3d_cpu.cpp -o pre_euler3d_cpu
+	clang++ -O3 -Dblock_length=$(OMP_NUM_THREADS) -fopenmp pre_euler3d_cpu.cpp -o pre_euler3d_cpu
 
 pre_euler3d_cpu_double: pre_euler3d_cpu_double.cpp
-	g++ -O3 -Dblock_length=$(OMP_NUM_THREADS) -fopenmp pre_euler3d_cpu_double.cpp -o pre_euler3d_cpu_double
+	clang++ -O3 -Dblock_length=$(OMP_NUM_THREADS) -fopenmp pre_euler3d_cpu_double.cpp -o pre_euler3d_cpu_double
 
 
 clean:
 #	rm -f euler3d
 	rm -f euler3d_cpu
 	rm -f euler3d_cpu_offload
+	rm -f euler3d_cpu_meta
 #	rm -f euler3d_double
 	rm -f euler3d_cpu_double
 
