@@ -59,9 +59,6 @@ void single_iteration(FLOAT *result, FLOAT *temp, FLOAT *power, int row, int col
     int chunks_in_col = row/BLOCK_SIZE_R;
 
 #ifdef OPEN
-    //#ifndef __MIC__
-	//omp_set_num_threads(num_omp_threads);
-    //#endif
     #pragma omp parallel for shared(power, temp, result) private(chunk, r, c, delta) firstprivate(row, col, num_chunk, chunks_in_row) schedule(static)
 #endif
     for ( chunk = 0; chunk < num_chunk; ++chunk )
@@ -144,10 +141,6 @@ void single_iteration(FLOAT *result, FLOAT *temp, FLOAT *power, int row, int col
     }
 }
 
-#ifdef OMP_OFFLOAD
-//#pragma offload_attribute(pop)
-#endif
-
 /* Transient solver driver routine: simply converts the heat 
  * transfer differential equations to difference equations 
  * and solves the difference equations by iterating
@@ -178,16 +171,19 @@ void compute_tran_temp(FLOAT *result, int num_iterations, FLOAT *temp, FLOAT *po
 	fprintf(stdout, "Rx: %g\tRy: %g\tRz: %g\tCap: %g\n", Rx, Ry, Rz, Cap);
 	#endif
 
-#ifdef OMP_OFFLOAD
+//#ifdef OMP_OFFLOAD
         int array_size = row*col;
-#pragma omp target \
+        FLOAT* r;
+        FLOAT* t;
+/*#pragma omp target \*/
+#pragma omp metadirective when(device={arch("nvptx64")}: target \
         map(temp[0:array_size]) \
         map(to: power[0:array_size], row, col, Cap_1, Rx_1, Ry_1, Rz_1, step, num_iterations) \
-        map( result[0:array_size])
-#endif
+        map( result[0:array_size]) private(r, t))
+//#endif
         {
-            FLOAT* r = result;
-            FLOAT* t = temp;
+            r = result;
+            t = temp;
             for (int i = 0; i < num_iterations ; i++)
             {
                 #ifdef VERBOSE
