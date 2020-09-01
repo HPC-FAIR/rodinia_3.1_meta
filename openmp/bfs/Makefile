@@ -14,7 +14,7 @@ bfs_offload: bfs.cpp
 	$(CLANG) $(CLANG_FLAGS) -DOMP_OFFLOAD=1 bfs.cpp -o bfs_offload
 
 bfs_offload_meta: bfs_meta.cpp
-	$(CLANG) $(CLANG_FLAGS) -DOMP_OFFLOAD=1 bfs_meta.cpp -o bfs_offload_meta
+	$(CLANG) $(CLANG_FLAGS) bfs_meta.cpp -o bfs_offload_meta
 
 clean:
 	rm -f bfs bfs_offload bfs_offload_meta result.txt

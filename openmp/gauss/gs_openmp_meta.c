@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
 	int cnt_iter = 0;
 	const int mat_dim = n * n;
 	float temp,x;
-#pragma omp target data map(to:mat)
+#pragma omp metadirective when(device={arch("nvptx64")}: target data map(to:mat)) default(parallel num_threads(1))
     {
 	while (!done && (cnt_iter < MAX_ITER)) {
 		diff = 0;

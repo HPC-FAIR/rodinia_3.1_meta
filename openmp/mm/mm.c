@@ -37,18 +37,19 @@ int main(int argc, char **argv)
     gen_matrix(C, N);
 
     gettimeofday(&tv1, NULL);
+    double sum;
 #ifdef OMP_OFFLOAD
 #pragma omp target data map(to:A,B,C) map(from:D) map(alloc:C1)
 #endif
     {
 #ifdef OMP_OFFLOAD
-#pragma omp target teams distribute parallel for collapse(2)
+#pragma omp target teams distribute parallel for collapse(2) private(sum)
 #else
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for collapse(2) private(sum)
 #endif
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                double sum = 0.0;
+                sum = 0.0;
                 for (int k = 0; k < N; k++)
                     sum = sum + A[i * N + k] * B[k * N + j];
                 C1[i * N + j] = sum;
@@ -56,13 +57,13 @@ int main(int argc, char **argv)
         }
 
 #ifdef OMP_OFFLOAD
-#pragma omp target teams distribute parallel for collapse(2)
+#pragma omp target teams distribute parallel for collapse(2) private(sum)
 #else
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for collapse(2) private(sum)
 #endif
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                double sum = 0.0;
+                sum = 0.0;
                 for (int k = 0; k < N; k++)
                     sum = sum + C1[i * N + k] * C[k * N + j];
                 D[i * N + j] = sum;

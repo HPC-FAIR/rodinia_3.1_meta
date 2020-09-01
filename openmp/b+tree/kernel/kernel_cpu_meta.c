@@ -84,7 +84,7 @@ kernel_cpu(	int cores_arg,
 
 	// process number of querries
 	//#pragma omp parallel for private (i, thid)
-	#pragma omp metadirective when(user={condition(count>1000)}: parallel for private (i, thid))
+	#pragma omp metadirective when(user={condition(count>100)}: parallel for private (i, thid)) default(parallel num_threads(1) private(i,thid))
 	for(bid = 0; bid < count; bid++){
 
 		// process levels of the tree

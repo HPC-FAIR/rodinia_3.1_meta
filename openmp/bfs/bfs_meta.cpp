@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <omp.h>
+#include <sys/time.h>
 //#define NUM_THREAD 4
 #define OPEN 1
 
@@ -18,6 +19,12 @@ struct Node
 
 void BFSGraph(int argc, char** argv);
 
+double get_time() {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  return (tv.tv_sec * 1000000) + tv.tv_usec;
+}  
+
 void Usage(int argc, char**argv){
 
 fprintf(stderr,"Usage: %s <num_threads> <input_file>\n", argv[0]);
@@ -28,10 +35,11 @@ fprintf(stderr,"Usage: %s <num_threads> <input_file>\n", argv[0]);
 ////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char** argv) 
 {
+  double t = get_time();
 	BFSGraph( argc, argv);
+  printf("%lf\n", (get_time() - t)/1000000.0);
+  return 0;
 }
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 //Apply BFS on a Graph using CUDA
@@ -51,12 +59,16 @@ void BFSGraph( int argc, char** argv)
 	num_omp_threads = atoi(argv[1]);
 	input_f = argv[2];
 	
+#ifdef _DEBUG
 	printf("Reading File\n");
+#endif
 	//Read in Graph from a file
 	fp = fopen(input_f,"r");
 	if(!fp)
 	{
+#ifdef _DEBUG
 		printf("Error Reading graph file\n");
+#endif
 		return;
 	}
 
@@ -111,29 +123,26 @@ void BFSGraph( int argc, char** argv)
 		h_cost[i]=-1;
 	h_cost[source]=0;
 	
+#ifdef _DEBUG
 	printf("Start traversing the tree\n");
+#endif
 	
 	int k=0;
-#ifdef OPEN
-        double start_time = omp_get_wtime();
-#ifdef OMP_OFFLOAD
-#pragma omp target data map(to: no_of_nodes, h_graph_mask[0:no_of_nodes], h_graph_nodes[0:no_of_nodes], h_graph_edges[0:edge_list_size], h_graph_visited[0:no_of_nodes], h_updating_graph_mask[0:no_of_nodes]) map(h_cost[0:no_of_nodes])
-        {
-#endif 
-#endif
 	bool stop;
+  double start_time = omp_get_wtime();
+  double end_time;
+#ifdef OPEN
+#pragma omp metadirective when(device={arch("nvptx64")}:  target data map(to: no_of_nodes, h_graph_mask[0:no_of_nodes], h_graph_nodes[0:no_of_nodes], h_graph_edges[0:edge_list_size], h_graph_visited[0:no_of_nodes], h_updating_graph_mask[0:no_of_nodes]) map(h_cost[0:no_of_nodes]))
+        {
+#endif
 	do
         {
             //if no thread changes this value then the loop stops
             stop=false;
 
 #ifdef OPEN
-            //omp_set_num_threads(num_omp_threads);
-/*    #ifdef OMP_OFFLOAD
-    #pragma omp target
-    #endif
-    #pragma omp parallel for */
-#pragma omp metadirective when(user={condition(OMP_OFFLOAD>0)}: target parallel for) default(parallel for)
+            omp_set_num_threads(num_omp_threads);
+#pragma omp metadirective when(device={arch("nvptx64")}: target parallel for) default(parallel for)
 #endif 
             for(int tid = 0; tid < no_of_nodes; tid++ )
             {
@@ -152,10 +161,7 @@ void BFSGraph( int argc, char** argv)
             }
 
 #ifdef OPEN
-    /*#ifdef OMP_OFFLOAD
-    #pragma omp target data map(stop)
-    #endif*/
-#pragma omp metadirective when(user={condition(OMP_OFFLOAD>0)}: target parallel for map(stop)) default(parallel for)
+#pragma omp metadirective when(device={arch("nvptx64")}: target parallel for map(stop)) default(parallel for)
 #endif
             for(int tid=0; tid< no_of_nodes ; tid++ )
             {
@@ -170,19 +176,21 @@ void BFSGraph( int argc, char** argv)
         }
 	while(stop);
 #ifdef OPEN
-        double end_time = omp_get_wtime();
+        end_time = omp_get_wtime();
+#ifdef _DEBUG
         printf("Compute time: %lf\n", (end_time - start_time));
-#ifdef OMP_OFFLOAD
+#endif
         }
 #endif
-#endif
+
 	//Store the result into a file
-	FILE *fpo = fopen("result.txt","w");
+#ifdef _DEBUG
+  FILE *fpo = fopen("result.txt","w");
 	for(int i=0;i<no_of_nodes;i++)
 		fprintf(fpo,"%d) cost:%d\n",i,h_cost[i]);
 	fclose(fpo);
 	printf("Result stored in result.txt\n");
-
+#endif
 
 	// cleanup memory
 	free( h_graph_nodes);
@@ -191,6 +199,5 @@ void BFSGraph( int argc, char** argv)
 	free( h_updating_graph_mask);
 	free( h_graph_visited);
 	free( h_cost);
-
 }
 

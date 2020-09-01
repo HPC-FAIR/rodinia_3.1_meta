@@ -1,0 +1,1 @@
+./kmeans_openmp/kmeans_meta -i ../../data/kmeans/kdd_cup

@@ -545,7 +545,7 @@ int main(int argc, char *argv []){
 
 		omp_set_num_threads(omp_num_threads);
 		
-		#pragma omp metadirective when(user={condition(public.allPoints > 10)}: parallel for)
+		#pragma omp metadirective when(user={condition(public.allPoints > 10)}: parallel for) default(parallel num_threads(1))
 		for(i=0; i<public.allPoints; i++){
 			kernel(	public,
 						private[i]);

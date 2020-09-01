@@ -179,9 +179,11 @@ void compute_tran_temp(FLOAT *result, int num_iterations, FLOAT *temp, FLOAT *po
 #pragma omp metadirective when(device={arch("nvptx64")}: target \
         map(temp[0:array_size]) \
         map(to: power[0:array_size], row, col, Cap_1, Rx_1, Ry_1, Rz_1, step, num_iterations) \
-        map( result[0:array_size]) private(r, t))
+        map( result[0:array_size]) private(r, t)) default(parallel num_threads(1) private(r, t))
 //#endif
         {
+            FLOAT* r1;
+            FLOAT* t1;
             r = result;
             t = temp;
             for (int i = 0; i < num_iterations ; i++)

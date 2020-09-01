@@ -243,7 +243,7 @@ int n1, n2;
 
   #pragma omp metadirective when(user={condition(n2>10)}: parallel for \
       shared(conn, n1, n2, l1) private(k, j) reduction(+: sum) \
-      schedule(static) num_threads(NUM_THREAD))
+      schedule(static) num_threads(NUM_THREAD)) default(parallel num_threads(1))
   /*** For each unit in second layer ***/
   for (j = 1; j <= n2; j++) {
 

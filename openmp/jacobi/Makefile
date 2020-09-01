@@ -1,4 +1,4 @@
-CFLAGS = -Wall -O3 -fopenmp 
+CFLAGS = -Wall -fopenmp 
 OFFLOAD_FLAG = -fopenmp-targets=nvptx64-nvidia-cuda 
 CC=clang
 

@@ -70,7 +70,7 @@ void lud_omp(float *a, int size)
         float sum;           
         float temp[BS*BS] __attribute__ ((aligned (64)));
         #pragma omp metadirective when(user={condition(chunks_in_inter_row > 100)}: parallel for default(none) private(i,j,k,i_global,j_global,i_here,j_here, sum, temp) \
-          private(chunk_idx) shared(size, chunks_per_inter, chunks_in_inter_row, offset, a) )
+          private(chunk_idx) shared(size, chunks_per_inter, chunks_in_inter_row, offset, a) ) default(parallel num_threads(1))
         for ( chunk_idx = 0; chunk_idx < chunks_in_inter_row; chunk_idx++)
         {
 
@@ -124,7 +124,7 @@ void lud_omp(float *a, int size)
         float temp_left[BS*BS] __attribute__ ((aligned (64)));
         float sum2[BS] __attribute__ ((aligned (64))) = {0.f};
 #pragma omp  metadirective when(user={condition(chunks_in_inter_row > 100)}: parallel for schedule(auto) default(none) private(i,j,k,i_global,j_global, temp_top, temp_left, sum2) \
-         private(chunk_idx ) shared(size, chunks_per_inter, chunks_in_inter_row, offset, a) )
+         private(chunk_idx ) shared(size, chunks_per_inter, chunks_in_inter_row, offset, a) ) default(parallel num_threads(1))
         for  (chunk_idx =0; chunk_idx < chunks_per_inter; chunk_idx++)
         {
             //int i, j, k, i_global, j_global;

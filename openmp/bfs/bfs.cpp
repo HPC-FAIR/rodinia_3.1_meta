@@ -3,9 +3,9 @@
 #include <math.h>
 #include <stdlib.h>
 #include <omp.h>
+#include <sys/time.h>
 //#define NUM_THREAD 4
 #define OPEN 1
-
 
 FILE *fp;
 
@@ -18,6 +18,12 @@ struct Node
 
 void BFSGraph(int argc, char** argv);
 
+double get_time() {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  return (tv.tv_sec * 1000000) + tv.tv_usec;
+}
+
 void Usage(int argc, char**argv){
 
 fprintf(stderr,"Usage: %s <num_threads> <input_file>\n", argv[0]);
@@ -28,7 +34,9 @@ fprintf(stderr,"Usage: %s <num_threads> <input_file>\n", argv[0]);
 ////////////////////////////////////////////////////////////////////////////////
 int main( int argc, char** argv) 
 {
+  long long t = get_time();
 	BFSGraph( argc, argv);
+  printf("%lf\n", (get_time() - t)/1000000.0);
 }
 
 
@@ -51,12 +59,16 @@ void BFSGraph( int argc, char** argv)
 	num_omp_threads = atoi(argv[1]);
 	input_f = argv[2];
 	
+#ifdef _DEBUG
 	printf("Reading File\n");
+#endif
 	//Read in Graph from a file
 	fp = fopen(input_f,"r");
 	if(!fp)
 	{
+#ifdef _DEBUG
 		printf("Error Reading graph file\n");
+#endif
 		return;
 	}
 
@@ -111,7 +123,9 @@ void BFSGraph( int argc, char** argv)
 		h_cost[i]=-1;
 	h_cost[source]=0;
 	
+#ifdef _DEBUG
 	printf("Start traversing the tree\n");
+#endif
 	
 	int k=0;
 #ifdef OPEN
@@ -152,7 +166,7 @@ void BFSGraph( int argc, char** argv)
 
 #ifdef OPEN
     #ifdef OMP_OFFLOAD
-    #pragma omp target data map(stop)
+    #pragma omp target parallel for map(stop)
     #endif
 #endif
             for(int tid=0; tid< no_of_nodes ; tid++ )
@@ -169,17 +183,21 @@ void BFSGraph( int argc, char** argv)
 	while(stop);
 #ifdef OPEN
         double end_time = omp_get_wtime();
+//#ifdef _DEBUG
         printf("Compute time: %lf\n", (end_time - start_time));
+//#endif
 #ifdef OMP_OFFLOAD
         }
 #endif
 #endif
 	//Store the result into a file
+#ifdef _DEBUG
 	FILE *fpo = fopen("result.txt","w");
 	for(int i=0;i<no_of_nodes;i++)
 		fprintf(fpo,"%d) cost:%d\n",i,h_cost[i]);
 	fclose(fpo);
 	printf("Result stored in result.txt\n");
+#endif
 
 
 	// cleanup memory

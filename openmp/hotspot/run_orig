@@ -1,0 +1,1 @@
+./hotspot_offload 4096 4096 2 4 ../../data/hotspot/temp_4096 ../../data/hotspot/power_4096 output.out

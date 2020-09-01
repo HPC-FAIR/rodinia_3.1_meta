@@ -450,7 +450,7 @@ double pgain(long x, Points *points, double z, long int *numcenters, int pid, pt
 //	#pragma omp parallel for 
   float x_cost;
   float current_cost;
-	#pragma omp metadirective when(user={condition(k2>100)}: parallel for reduction(+: cost_of_opening_x) private(x_cost, current_cost))
+	#pragma omp metadirective when(user={condition(k2>100)}: parallel for reduction(+: cost_of_opening_x) private(x_cost, current_cost)) default(parallel num_threads(1))
   for ( i = k1; i < k2; i++ ) {
     x_cost = dist(points->p[i], points->p[x], points->dim) * points->p[i].weight;
     current_cost = points->p[i].cost;

@@ -1,7 +1,7 @@
 # C compiler
 CC = clang++
-CC_FLAGS = -fopenmp
-OFFLOAD_CC_FLAGS = -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70
+CC_FLAGS = -fopenmp 
+OFFLOAD_CC_FLAGS = -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70
 
 all: hotspot hotspot_offload hotspot_meta
 

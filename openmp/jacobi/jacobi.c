@@ -36,7 +36,9 @@ int main(int argc, char**argv) {
     gettimeofday(&t1, NULL);
     iter = 0;
 
+#ifdef OMP_OFFLOAD
     #pragma omp target data map(alloc:Anew) map(A)
+#endif
     while (err>tol && iter<iter_max) {
         err=0.0;
 #ifdef OMP_OFFLOAD

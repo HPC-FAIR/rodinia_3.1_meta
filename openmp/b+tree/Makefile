@@ -61,7 +61,14 @@ main.o:	./common.h \
 	$(C_C)	./kernel/kernel_cpu.c \
 			-c \
 			-o ./kernel/kernel_cpu.o \
-			-O3 \
+			$(OMP_FLAG)
+
+./kernel/kernel_cpu_meta.o:	./common.h \
+						./kernel/kernel_cpu.h \
+						./kernel/kernel_cpu_meta.c
+	$(C_C)	./kernel/kernel_cpu_meta.c \
+			-c \
+			-o ./kernel/kernel_cpu_meta.o \
 			$(OMP_FLAG)
 
 ./kernel/kernel_cpu_2.o:./common.h \
@@ -70,7 +77,14 @@ main.o:	./common.h \
 	$(C_C)	./kernel/kernel_cpu_2.c \
 			-c \
 			-o ./kernel/kernel_cpu_2.o \
-			-O3 \
+			$(OMP_FLAG)
+
+./kernel/kernel_cpu_2_meta.o:./common.h \
+						./kernel/kernel_cpu_2.h \
+						./kernel/kernel_cpu_2_meta.c
+	$(C_C)	./kernel/kernel_cpu_2_meta.c \
+			-c \
+			-o ./kernel/kernel_cpu_2_meta.o \
 			$(OMP_FLAG)
 
 # ======================================================================================================================================================150
@@ -82,16 +96,14 @@ main.o:	./common.h \
 						./util/timer/timer.c
 	$(C_C)	./util/timer/timer.c \
 			-c \
-			-o ./util/timer/timer.o \
-			-O3
+			-o ./util/timer/timer.o
 
 ./util/num/num.o:	./common.h \
 					./util/num/num.h \
 					./util/num/num.c
 	$(C_C)	./util/num/num.c \
 			-c \
-			-o ./util/num/num.o \
-			-O3
+			-o ./util/num/num.o
 
 # ======================================================================================================================================================150
 #	END

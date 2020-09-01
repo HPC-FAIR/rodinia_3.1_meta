@@ -5,7 +5,7 @@ FLAGS = -fopenmp
 
 all: release meta
 
-release:
+release: pathfinder.cpp
 	$(CC) $(SRC) $(FLAGS) -o $(EXE)
 
 meta: pathfinder_meta.cpp

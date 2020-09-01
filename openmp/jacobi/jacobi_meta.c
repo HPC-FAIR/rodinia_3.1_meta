@@ -37,7 +37,7 @@ int main(int argc, char**argv) {
     iter = 0;
 
     double val;
-    #pragma omp metadirective when(device={arch("nvptx64")} : target data map(alloc:Anew) map(A))
+    #pragma omp metadirective when(device={arch("nvptx64")} : target data map(alloc:Anew) map(A)) default(parallel num_threads(1))
     while (err>tol && iter<iter_max) {
         err=0.0;
         #pragma omp  metadirective when(device={arch("nvptx64")} : target teams distribute reduction(max:err) private(val)) default(parallel for reduction(max:err))
@@ -45,6 +45,7 @@ int main(int argc, char**argv) {
             #pragma omp parallel for reduction(max:err) private(val)
             for( j = 1; j < m - 1; j++) {
                 Anew[i][j] = 0.25 * (A[i][j+1] + A[i][j-1] + A[i-1][j] + A[i+1][j]);
+                double val1;
                 val = Anew[i][j] - A[i][j]; 
                 if(val < 0) val *= -1;
                 if(err < val)

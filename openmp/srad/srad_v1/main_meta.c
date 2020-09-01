@@ -250,7 +250,7 @@ int main(int argc, char *argv []){
         q0sqr   = varROI / (meanROI*meanROI);								// gets standard deviation of ROI
 
         // directional derivatives, ICOV, diffusion coefficent
-		#pragma omp metadirective when(user={condition(Nc>100)}: parallel for shared(image, dN, dS, dW, dE, c, Nr, Nc, iN, iS, jW, jE) private(i, j, k, Jc, G2, L, num, den, qsqr))
+		#pragma omp metadirective when(user={condition(Nc>100)}: parallel for shared(image, dN, dS, dW, dE, c, Nr, Nc, iN, iS, jW, jE) private(i, j, k, Jc, G2, L, num, den, qsqr)) default(parallel num_threads(1))
 		for (j=0; j<Nc; j++) {												// do for the range of columns in IMAGE
 
             for (i=0; i<Nr; i++) {											// do for the range of rows in IMAGE 

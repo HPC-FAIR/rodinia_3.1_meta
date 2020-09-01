@@ -38,9 +38,11 @@ int main(int argc, char **argv)
 
     gettimeofday(&tv1, NULL);
     double sum;
-#pragma omp metadirective when(device={arch("nvptx")}: target data map(to:A,B,C) map(from:D) map(alloc:C1))
+//#pragma omp metadirective when(device={arch("nvptx")}: target data map(to:A,B,C) map(from:D) map(alloc:C1))
+//#pragma omp target data map(to:A,B,C) map(from:D) map(alloc:C1)
     {
-#pragma omp metadirective when(device={arch("nvptx")}: target teams distribute parallel for collapse(2) private(sum)) default(parallel for collapse(2) private(sum))
+//#pragma omp metadirective when(device={arch("nvptx")}: target teams distribute parallel for collapse(2) private(sum) map(A,B,C1)) default(parallel for collapse(2) private(sum))
+#pragma omp metadirective when(device={arch("nvptx64")}: target teams distribute parallel for collapse(2) private(sum) map(A,B,C1)) default(parallel for collapse(2) private(sum))
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 sum = 0.0;
@@ -50,7 +52,7 @@ int main(int argc, char **argv)
             }
         }
 
-#pragma omp metadirective when(device={arch("nvptx")}: target teams distribute parallel for collapse(2) private(sum)) default(parallel for collapse(2) private(sum))
+#pragma omp metadirective when(device={arch("nvptx64")}: target teams distribute parallel for collapse(2) private(sum) map(D,C1,C)) default(parallel for collapse(2) private(sum))
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 sum = 0.0;

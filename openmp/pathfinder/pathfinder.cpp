@@ -3,15 +3,15 @@
 #include <time.h>
 #include <assert.h>
 
-#include "timer.h"
+//#include "timer.h"
 
 void run(int argc, char** argv);
 
 /* define timer macros */
-#define pin_stats_reset()   startCycle()
+/*#define pin_stats_reset()   startCycle()
 #define pin_stats_pause(cycles)   stopCycle(cycles)
 #define pin_stats_dump(cycles)    printf("timer: %Lu\n", cycles)
-
+*/
 #define BENCH_PRINT
 
 int rows, cols;
@@ -90,7 +90,7 @@ void run(int argc, char** argv)
     dst = result;
     src = new int[cols];
 
-    pin_stats_reset();
+    //pin_stats_reset();
     for (int t = 0; t < rows-1; t++) {
         temp = src;
         src = dst;
@@ -107,8 +107,8 @@ void run(int argc, char** argv)
         }
     }
 
-    pin_stats_pause(cycles);
-    pin_stats_dump(cycles);
+    //pin_stats_pause(cycles);
+    //pin_stats_dump(cycles);
 
 #ifdef BENCH_PRINT
     for (int i = 0; i < cols; i++)
