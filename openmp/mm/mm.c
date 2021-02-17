@@ -2,6 +2,7 @@
 #include <sys/time.h>
 #include <stdlib.h>
 #include <omp.h>
+#define OPEN 1
 
 double total_in = 0;
 double total_out = 0;
@@ -38,8 +39,11 @@ int main(int argc, char **argv)
 
     gettimeofday(&tv1, NULL);
     double sum;
+#ifdef OPEN
+        double start_time = omp_get_wtime();
 #ifdef OMP_OFFLOAD
 #pragma omp target data map(to:A,B,C) map(from:D) map(alloc:C1)
+#endif
 #endif
     {
 #ifdef OMP_OFFLOAD
@@ -70,6 +74,12 @@ int main(int argc, char **argv)
             }
         }
     }
+#ifdef OPEN
+        double end_time = omp_get_wtime();
+//#ifdef _DEBUG
+        printf("Compute time: %lf\n", (end_time - start_time));
+//#endif
+#endif
     gettimeofday(&tv2, NULL);
 
     printf("Time taken to multiply 3 matrices = %.2f\n",
