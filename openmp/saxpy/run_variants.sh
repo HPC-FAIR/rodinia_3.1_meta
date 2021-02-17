@@ -1,7 +1,7 @@
 #!/bin/bash
 GPUPERFTOOL=nvprof
 CPUPERFTOOL=
-APP=(saxpy_offload)
+APP=(saxpy saxpy_offload)
 
 
 # loop over application variants

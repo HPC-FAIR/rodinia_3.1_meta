@@ -16,13 +16,17 @@ int main(int argc, char** argv ) {
 	num_omp_threads = atoi(argv[1]);
 
 #ifdef OPEN
-        double start_time = omp_get_wtime();
-#endif
+    omp_set_num_threads(num_omp_threads);
+    double start_time = omp_get_wtime();
+#ifdef OMP_OFFLOAD
 #pragma omp target data map(to:XVAL, YVAL, AVAL) map(x,y)
+#endif
+#endif
     {
 #ifdef OMP_OFFLOAD
-    omp_set_num_threads(num_omp_threads);
 #pragma omp target teams distribute parallel for
+#else
+#pragma omp parallel for 
 #endif
     for (unsigned long i = 0; i < N; ++i) {
         x[i] = XVAL;
@@ -30,8 +34,9 @@ int main(int argc, char** argv ) {
     }
 
 #ifdef OMP_OFFLOAD
-    omp_set_num_threads(num_omp_threads);
 #pragma omp target teams distribute parallel for
+#else
+#pragma omp parallel for 
 #endif
     for (unsigned long i = 0; i < N; ++i) {
         y[i] += AVAL * x[i];
