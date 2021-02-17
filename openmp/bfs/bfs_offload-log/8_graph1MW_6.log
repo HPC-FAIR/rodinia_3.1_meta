@@ -1,33 +1,33 @@
-==123605== NVPROF is profiling process 123605, command: bfs_offload 8 ../../data/bfs/graph1MW_6.txt
-==123605== Profiling application: bfs_offload 8 ../../data/bfs/graph1MW_6.txt
-==123605== Profiling result:
+==104745== NVPROF is profiling process 104745, command: bfs_offload 8 ../../data/bfs/graph1MW_6.txt
+==104745== Profiling application: bfs_offload 8 ../../data/bfs/graph1MW_6.txt
+==104745== Profiling result:
             Type  Time(%)      Time     Calls       Avg       Min       Max  Name
                         %        ms                  ms        ms        ms
- GPU activities:    75.13  847.3362        12  70.61135  19.13679  209.8229  __omp_offloading_30_13579bc__Z8BFSGraphiPPc_l147
-                    24.58  277.1828        12  23.09856  19.13122  26.82384  __omp_offloading_30_13579bc__Z8BFSGraphiPPc_l169
-                     0.27  3.034689        19  0.159720  1.31e-03  1.988171  [CUDA memcpy HtoD]
-                     0.03  0.302909        15  0.020193  1.66e-03  0.277949  [CUDA memcpy DtoH]
-      API calls:    58.82  848.8336        32  26.52605  5.19e-03  209.9049  cuStreamSynchronize
-                    19.25  277.8107        13  21.37005  0.511838  26.83029  cuMemcpyDtoHAsync
-                    12.87  185.7102         1  185.7102  185.7102  185.7102  cuDevicePrimaryCtxRetain
-                     6.59  95.15255         1  95.15255  95.15255  95.15255  cuDevicePrimaryCtxRelease
-                     1.54  22.24638         1  22.24638  22.24638  22.24638  cuModuleLoadDataEx
-                     0.31  4.423405         1  4.423405  4.423405  4.423405  cuModuleUnload
-                     0.25  3.662117        19  0.192743  7.63e-03  2.086665  cuMemcpyHtoDAsync
-                     0.19  2.764964         8  0.345620  9.86e-03  0.841833  cuMemAlloc
-                     0.07  0.940816         6  0.156802  0.014128  0.252618  cuMemFree
-                     0.05  0.776986        32  0.024280  3.99e-03  0.328566  cuStreamCreate
-                     0.03  0.375825        32  0.011744  0.011166  0.016833  cuStreamDestroy
-                     0.02  0.271553        24  0.011314  9.73e-03  0.026425  cuLaunchKernel
-                     0.00  0.060766         2  0.030383  0.025955  0.034811  cuMemcpyDtoH
-                     0.00  0.037261        78  4.77e-04  3.07e-04  1.31e-03  cuCtxSetCurrent
-                     0.00  7.98e-03         4  2.00e-03  1.16e-03  3.25e-03  cuDeviceGetPCIBusId
-                     0.00  5.75e-03        15  3.83e-04  2.62e-04  6.36e-04  cuDeviceGetAttribute
-                     0.00  5.23e-03         5  1.05e-03  4.79e-04  3.02e-03  cuDeviceGet
-                     0.00  3.55e-03         3  1.18e-03  7.56e-04  1.65e-03  cuModuleGetGlobal
-                     0.00  2.16e-03         2  1.08e-03  8.34e-04  1.32e-03  cuModuleGetFunction
-                     0.00  2.11e-03         2  1.05e-03  8.32e-04  1.28e-03  cuFuncGetAttribute
-                     0.00  1.52e-03         3  5.05e-04  3.57e-04  6.25e-04  cuDeviceGetCount
-                     0.00  1.34e-03         1  1.34e-03  1.34e-03  1.34e-03  cuDevicePrimaryCtxGetState
-                     0.00  6.13e-04         1  6.13e-04  6.13e-04  6.13e-04  cuDevicePrimaryCtxSetFlags
-                     0.00  4.87e-04         1  4.87e-04  4.87e-04  4.87e-04  cuCtxGetDevice
+ GPU activities:    75.11  846.7784        12  70.56487  19.16392  210.0633  __omp_offloading_30_13579bc__Z8BFSGraphiPPc_l147
+                    24.59  277.2183        12  23.10152  19.13748  26.84974  __omp_offloading_30_13579bc__Z8BFSGraphiPPc_l169
+                     0.27  3.027636        19  0.159349  1.28e-03  1.975320  [CUDA memcpy HtoD]
+                     0.03  0.313919        15  0.020927  1.66e-03  0.287775  [CUDA memcpy DtoH]
+      API calls:    58.86  847.9884        32  26.49964  5.15e-03  210.1493  cuStreamSynchronize
+                    19.29  277.8614        13  21.37395  0.519131  26.85833  cuMemcpyDtoHAsync
+                    12.72  183.2158         1  183.2158  183.2158  183.2158  cuDevicePrimaryCtxRetain
+                     6.64  95.60896         1  95.60896  95.60896  95.60896  cuDevicePrimaryCtxRelease
+                     1.55  22.30947         1  22.30947  22.30947  22.30947  cuModuleLoadDataEx
+                     0.30  4.393351         1  4.393351  4.393351  4.393351  cuModuleUnload
+                     0.25  3.662108        19  0.192742  7.98e-03  2.074802  cuMemcpyHtoDAsync
+                     0.23  3.245531         8  0.405691  9.56e-03  0.864887  cuMemAlloc
+                     0.06  0.931005         6  0.155167  0.014198  0.250689  cuMemFree
+                     0.05  0.784215        32  0.024506  3.97e-03  0.334543  cuStreamCreate
+                     0.03  0.375547        32  0.011735  0.011142  0.017713  cuStreamDestroy
+                     0.02  0.275326        24  0.011471  9.98e-03  0.026196  cuLaunchKernel
+                     0.00  0.060031         2  0.030015  0.025279  0.034752  cuMemcpyDtoH
+                     0.00  0.037466        78  4.80e-04  3.69e-04  1.32e-03  cuCtxSetCurrent
+                     0.00  7.93e-03         4  1.98e-03  1.16e-03  3.36e-03  cuDeviceGetPCIBusId
+                     0.00  6.02e-03        15  4.01e-04  2.99e-04  6.18e-04  cuDeviceGetAttribute
+                     0.00  5.44e-03         5  1.09e-03  4.38e-04  3.38e-03  cuDeviceGet
+                     0.00  3.46e-03         3  1.15e-03  7.50e-04  1.49e-03  cuModuleGetGlobal
+                     0.00  2.11e-03         2  1.05e-03  9.51e-04  1.16e-03  cuModuleGetFunction
+                     0.00  2.09e-03         2  1.04e-03  7.56e-04  1.33e-03  cuFuncGetAttribute
+                     0.00  1.43e-03         3  4.76e-04  3.38e-04  5.70e-04  cuDeviceGetCount
+                     0.00  1.37e-03         1  1.37e-03  1.37e-03  1.37e-03  cuDevicePrimaryCtxGetState
+                     0.00  5.21e-04         1  5.21e-04  5.21e-04  5.21e-04  cuDevicePrimaryCtxSetFlags
+                     0.00  4.93e-04         1  4.93e-04  4.93e-04  4.93e-04  cuCtxGetDevice

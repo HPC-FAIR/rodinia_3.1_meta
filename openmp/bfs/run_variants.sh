@@ -1,7 +1,7 @@
 #!/bin/bash
 GPUPERFTOOL=nvprof
 CPUPERFTOOL=
-APP=(bfs_offload)
+APP=(bfs bfs_offload)
 
 DATADIR="../../data/bfs" 
 
