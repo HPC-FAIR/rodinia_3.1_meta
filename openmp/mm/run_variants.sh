@@ -1,7 +1,7 @@
 #!/bin/bash
 GPUPERFTOOL=nvprof
 CPUPERFTOOL=
-APP=(mm_offload)
+APP=(mm mm_offload)
 
 # loop over application variants
 for app in "${APP[@]}";
