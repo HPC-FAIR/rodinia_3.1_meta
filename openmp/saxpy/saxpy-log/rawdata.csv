@@ -1,0 +1,8 @@
+App, thread, inputdata, exetime 
+saxpy,4,default,0.585766
+saxpy,8,default,0.301860
+saxpy,16,default,0.193102
+saxpy,32,default,0.153644
+saxpy,64,default,0.147597
+saxpy,128,default,0.184518
+saxpy,256,default,0.216251
