@@ -33,7 +33,8 @@ int main(int argc, char**argv) {
     int i, j;
     struct timeval t1, t2;
 
-    gettimeofday(&t1, NULL);
+    //gettimeofday(&t1, NULL);
+    double start_time = omp_get_wtime();
     iter = 0;
 
 #ifdef OMP_OFFLOAD
@@ -69,9 +70,12 @@ int main(int argc, char**argv) {
         }
         iter++;
     }
-    gettimeofday(&t2, NULL);
-    double runtime = (t2.tv_sec - t1.tv_sec);
-    runtime += (t2.tv_usec - t1.tv_usec) / 1000000.0;
+    //gettimeofday(&t2, NULL);
+    //double end_time = omp_get_wtime();
+    //double runtime = (t2.tv_sec - t1.tv_sec);
+    //runtime += (t2.tv_usec - t1.tv_usec) / 1000000.0;
+    double end_time = omp_get_wtime();
+    printf("Compute time: %lf\n", (end_time - start_time));
 
     //printf("%.3f %d\n", runtime, iter);
 
