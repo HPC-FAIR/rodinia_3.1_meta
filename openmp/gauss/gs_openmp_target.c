@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
 
 	// Initial operation time
 	const double i_exec_t = omp_get_wtime();
+        double start_time = omp_get_wtime();
 
 	// Parallelized solver
 	//solver(&mat, n, n, max_threads, max_cells);
@@ -101,14 +102,16 @@ int main(int argc, char *argv[]) {
 
 	// Final operation time
 	const double f_exec_t = omp_get_wtime();
+        double end_time = omp_get_wtime();
 
 	// Finish recording the time
 	const double f_total_t = omp_get_wtime();
 
 	const double total_time = f_total_t - i_total_t;
 	const double exec_time = f_exec_t - i_exec_t;
-	printf("Total time: %lf\n", total_time);
-	printf("Operations time: %lf\n", exec_time);
+	//printf("Total time: %lf\n", total_time);
+	//printf("Operations time: %lf\n", exec_time);
+        printf("Compute time: %lf\n", (end_time - start_time));
 
 	//write_to_file(n, "static", total_time, exec_time);
 }
