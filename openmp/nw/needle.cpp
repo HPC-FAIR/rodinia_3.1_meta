@@ -302,14 +302,17 @@ runTest( int argc, char** argv)
     printf("Num of threads: %d\n", omp_num_threads);
     printf("Processing top-left matrix\n");
    
-    long long start_time = get_time();
+    //long long start_time = get_time();
+    double start_time = omp_get_wtime();
 
     nw_optimized( input_itemsets, output_itemsets, referrence,
         max_rows, max_cols, penalty );
 
-    long long end_time = get_time();
+    //long long end_time = get_time();
 
-    printf("Total time: %.3f seconds\n", ((float) (end_time - start_time)) / (1000*1000));
+    double end_time = omp_get_wtime();
+    printf("Compute time: %lf\n", (end_time - start_time));
+    //printf("Total time: %.3f seconds\n", ((float) (end_time - start_time)) / (1000*1000));
 
 #define TRACEBACK
 #ifdef TRACEBACK
