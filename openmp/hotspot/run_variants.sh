@@ -20,8 +20,8 @@ for (( t=8; t<=128; t*=2 ));
 do
   tempinut=$DATADIR/temp_${inputdata}
   powerinput=$DATADIR/power_${inputdata}
-  echo "Test command: $GPUPERFTOOL  -u ms --log-file $LOGDIR/${t}_${TESTINPUT}.log $app $inputdata $inputdata 2 $t $tempinut $powerinput output.out"
-  $GPUPERFTOOL  -u ms --log-file "$LOGDIR/${t}_${TESTINPUT}.log" $app $inputdata $inputdata 2 $t $tempinut $powerinput output.out &> tmp.log
+  echo "Test command: $GPUPERFTOOL  -u ms --log-file $LOGDIR/${t}_${inputdata}.log $app $inputdata $inputdata 2 $t $tempinut $powerinput output.out"
+  $GPUPERFTOOL  -u ms --log-file "$LOGDIR/${t}_${inputdata}.log" $app $inputdata $inputdata 2 $t $tempinut $powerinput output.out &> tmp.log
   exectime=$(grep -oP '(?<=Compute time: )[0-9]+\.[0-9]*' tmp.log)
   echo "$app,$t,$inputdata,$exectime" >> "$file" 
 done
