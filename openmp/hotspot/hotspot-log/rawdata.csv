@@ -1,0 +1,16 @@
+App, thread, inputdata, exetime 
+hotspot,8,64,0.128178
+hotspot,16,64,0.078523
+hotspot,32,64,0.100654
+hotspot,64,64,0.100856
+hotspot,128,64,0.136754
+hotspot,8,512,0.076538
+hotspot,16,512,0.114138
+hotspot,32,512,0.087965
+hotspot,64,512,0.089044
+hotspot,128,512,0.065858
+hotspot,8,1024,0.078224
+hotspot,16,1024,0.103984
+hotspot,32,1024,0.080052
+hotspot,64,1024,0.100555
+hotspot,128,1024,0.079824

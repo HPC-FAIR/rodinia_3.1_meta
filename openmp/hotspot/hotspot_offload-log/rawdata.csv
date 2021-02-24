@@ -1,0 +1,16 @@
+App, thread, inputdata, exetime 
+hotspot_offload,8,64,0.246216
+hotspot_offload,16,64,0.246567
+hotspot_offload,32,64,0.242770
+hotspot_offload,64,64,0.243104
+hotspot_offload,128,64,0.244462
+hotspot_offload,8,512,1.566796
+hotspot_offload,16,512,1.555123
+hotspot_offload,32,512,1.554128
+hotspot_offload,64,512,1.558062
+hotspot_offload,128,512,1.555182
+hotspot_offload,8,1024,5.590967
+hotspot_offload,16,1024,5.604806
+hotspot_offload,32,1024,5.595598
+hotspot_offload,64,1024,5.566419
+hotspot_offload,128,1024,5.605871

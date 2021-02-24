@@ -301,14 +301,17 @@ int main(int argc, char **argv)
 
 	printf("Start computing the transient temperature\n");
 	
-    long long start_time = get_time();
+    //long long start_time = get_time();
+    double start_time = omp_get_wtime();
 
     compute_tran_temp(result,sim_time, temp, power, grid_rows, grid_cols);
 
-    long long end_time = get_time();
+    //long long end_time = get_time();
 
-    printf("Ending simulation\n");
-    printf("Total time: %.3f seconds\n", ((float) (end_time - start_time)) / (1000*1000));
+    //printf("Ending simulation\n");
+    //printf("Total time: %.3f seconds\n", ((float) (end_time - start_time)) / (1000*1000));
+    double end_time = omp_get_wtime();
+    printf("Compute time: %lf\n", (end_time - start_time));
 
     writeoutput((1&sim_time) ? result : temp, grid_rows, grid_cols, ofile);
 
