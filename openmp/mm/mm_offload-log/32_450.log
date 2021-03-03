@@ -1,32 +1,531 @@
-==3415== NVPROF is profiling process 3415, command: mm_offload 32 450
-==3415== Profiling application: mm_offload 32 450
-==3415== Profiling result:
-            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
-                        %        ms                  ms        ms        ms
- GPU activities:    48.28  0.120192         1  0.120192  0.120192  0.120192  __omp_offloading_30_13046cf_main_l50
-                    46.54  0.115871         1  0.115871  0.115871  0.115871  __omp_offloading_30_13046cf_main_l64
-                     2.78  6.91e-03         3  2.30e-03  2.30e-03  2.30e-03  [CUDA memcpy HtoD]
-                     2.40  5.98e-03         3  1.99e-03  1.82e-03  2.30e-03  [CUDA memcpy DtoH]
-      API calls:    65.38  239.6722         1  239.6722  239.6722  239.6722  cuDevicePrimaryCtxRetain
-                    26.31  96.44010         1  96.44010  96.44010  96.44010  cuDevicePrimaryCtxRelease
-                     6.19  22.69726         1  22.69726  22.69726  22.69726  cuModuleLoadDataEx
-                     1.48  5.412131         1  5.412131  5.412131  5.412131  cuModuleUnload
-                     0.21  0.783952        32  0.024498  3.95e-03  0.335268  cuStreamCreate
-                     0.13  0.487801         5  0.097560  7.35e-03  0.453853  cuMemAlloc
-                     0.13  0.477232        32  0.014913  0.014125  0.022263  cuStreamDestroy
-                     0.11  0.390725         6  0.065120  6.44e-03  0.169023  cuStreamSynchronize
-                     0.02  0.073714         2  0.036857  0.030571  0.043143  cuMemcpyDtoH
-                     0.01  0.039273         2  0.019636  0.017071  0.022202  cuLaunchKernel
-                     0.01  0.031021         1  0.031021  0.031021  0.031021  cuMemcpyDtoHAsync
-                     0.01  0.028882         3  9.63e-03  8.38e-03  0.011577  cuMemcpyHtoDAsync
-                     0.00  0.012650        19  6.65e-04  3.78e-04  1.40e-03  cuCtxSetCurrent
-                     0.00  8.68e-03         4  2.17e-03  1.31e-03  3.64e-03  cuDeviceGetPCIBusId
-                     0.00  6.38e-03        15  4.25e-04  2.56e-04  9.29e-04  cuDeviceGetAttribute
-                     0.00  4.55e-03         3  1.52e-03  1.21e-03  2.05e-03  cuModuleGetGlobal
-                     0.00  4.40e-03         5  8.80e-04  4.37e-04  2.32e-03  cuDeviceGet
-                     0.00  2.89e-03         2  1.45e-03  1.07e-03  1.82e-03  cuModuleGetFunction
-                     0.00  2.83e-03         2  1.41e-03  9.06e-04  1.93e-03  cuFuncGetAttribute
-                     0.00  2.37e-03         1  2.37e-03  2.37e-03  2.37e-03  cuDevicePrimaryCtxGetState
-                     0.00  1.39e-03         3  4.64e-04  3.58e-04  5.37e-04  cuDeviceGetCount
-                     0.00  1.29e-03         1  1.29e-03  1.29e-03  1.29e-03  cuDevicePrimaryCtxSetFlags
-                     0.00  9.53e-04         1  9.53e-04  9.53e-04  9.53e-04  cuCtxGetDevice
+==77949== NVPROF is profiling process 77949, command: mm_offload 32 450
+==77949== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+==77949== Profiling application: mm_offload 32 450
+==77949== Profiling result:
+==77949== Event result:
+Invocations                                Event Name         Min         Max         Avg       Total
+Device "Tesla V100-SXM2-16GB (0)"
+    Kernel: __omp_offloading_2f_13046cf_main_l50
+          1                     fb_subp0_read_sectors        1688        1688        1688        1688
+          1                     fb_subp1_read_sectors        1584        1584        1584        1584
+          1                    fb_subp0_write_sectors        9096        9096        9096        9096
+          1                    fb_subp1_write_sectors        9176        9176        9176        9176
+          1              l2_subp0_write_sector_misses       13246       13246       13246       13246
+          1              l2_subp1_write_sector_misses       13316       13316       13316       13316
+          1               l2_subp0_read_sector_misses         536         536         536         536
+          1               l2_subp1_read_sector_misses         474         474         474         474
+          1          l2_subp0_read_tex_sector_queries        1676        1676        1676        1676
+          1          l2_subp1_read_tex_sector_queries        1664        1664        1664        1664
+          1         l2_subp0_write_tex_sector_queries       24640       24640       24640       24640
+          1         l2_subp1_write_tex_sector_queries       24640       24640       24640       24640
+          1             l2_subp0_read_tex_hit_sectors        1356        1356        1356        1356
+          1             l2_subp1_read_tex_hit_sectors        1348        1348        1348        1348
+          1            l2_subp0_write_tex_hit_sectors       12928       12928       12928       12928
+          1            l2_subp1_write_tex_hit_sectors       12928       12928       12928       12928
+          1        l2_subp0_total_read_sector_queries        3026        3026        3026        3026
+          1        l2_subp1_total_read_sector_queries        2170        2170        2170        2170
+          1       l2_subp0_total_write_sector_queries       24641       24641       24641       24641
+          1       l2_subp1_total_write_sector_queries       24664       24664       24664       24664
+          1       l2_subp0_read_sysmem_sector_queries         514         514         514         514
+          1       l2_subp1_read_sysmem_sector_queries           0           0           0           0
+          1      l2_subp0_write_sysmem_sector_queries           5           5           5           5
+          1      l2_subp1_write_sysmem_sector_queries           0           0           0           0
+          1                         elapsed_cycles_sm    14113390    14113390    14113390    14113390
+          1                           prof_trigger_00           0           0           0           0
+          1                           prof_trigger_01           0           0           0           0
+          1                           prof_trigger_02           0           0           0           0
+          1                           prof_trigger_03           0           0           0           0
+          1                           prof_trigger_04           0           0           0           0
+          1                           prof_trigger_05           0           0           0           0
+          1                           prof_trigger_06           0           0           0           0
+          1                           prof_trigger_07           0           0           0           0
+          1                            warps_launched          32          32          32          32
+          1                              inst_issued0     4732837     4732837     4732837     4732837
+          1                              inst_issued1      269096      269096      269096      269096
+          1                             inst_executed      268968      268968      268968      268968
+          1                      thread_inst_executed    25112192    25112192    25112192    25112192
+          1   not_predicated_off_thread_inst_executed    24301032    24301032    24301032    24301032
+          1                             active_cycles     1258922     1258922     1258922     1258922
+          1                              active_warps    10528148    10528148    10528148    10528148
+          1                               shared_atom           0           0           0           0
+          1                           sm_cta_launched           8           8           8           8
+          1                           shared_atom_cas           0           0           0           0
+          1                               shared_load           0           0           0           0
+          1                              shared_store           0           0           0           0
+          1                              generic_load       13184       13184       13184       13184
+          1                             generic_store        4520        4520        4520        4520
+          1                               global_load           0           0           0           0
+          1                              global_store           0           0           0           0
+          1                                local_load        4672        4672        4672        4672
+          1                               local_store        4736        4736        4736        4736
+          1                                atom_count           0           0           0           0
+          1                                gred_count           0           0           0           0
+          1                    shared_ld_transactions          96          96          96          96
+          1                    shared_st_transactions          72          72          72          72
+          1                   shared_ld_bank_conflict           0           0           0           0
+          1                   shared_st_bank_conflict           0           0           0           0
+          1                           global_atom_cas           0           0           0           0
+          1                          active_cycles_pm     1340067     1340067     1340067     1340067
+          1                           active_warps_pm     5002532     5002532     5002532     5002532
+          1                         elapsed_cycles_pm    14135386    14135386    14135386    14135386
+          1                inst_executed_fp16_pipe_s0           0           0           0           0
+          1                inst_executed_fp16_pipe_s1           0           0           0           0
+          1                inst_executed_fp16_pipe_s2           0           0           0           0
+          1                inst_executed_fp16_pipe_s3           0           0           0           0
+          1                inst_executed_fp64_pipe_s0         512         512         512         512
+          1                inst_executed_fp64_pipe_s1         512         512         512         512
+          1                inst_executed_fp64_pipe_s2         512         512         512         512
+          1                inst_executed_fp64_pipe_s3         512         512         512         512
+          1                 inst_executed_fma_pipe_s0        2858        2858        2858        2858
+          1                 inst_executed_fma_pipe_s1        2860        2860        2860        2860
+          1                 inst_executed_fma_pipe_s2        2862        2862        2862        2862
+          1                 inst_executed_fma_pipe_s3        2860        2860        2860        2860
+          1              tensor_pipe_active_cycles_s0           0           0           0           0
+          1              tensor_pipe_active_cycles_s1           0           0           0           0
+          1              tensor_pipe_active_cycles_s2           0           0           0           0
+          1              tensor_pipe_active_cycles_s3           0           0           0           0
+          1                      pcie_tx_active_pulse           0           0           0           0
+          1                      pcie_rx_active_pulse           0           0           0           0
+          1                         active_cycles_sys      162905      162905      162905      162905
+          1                        elapsed_cycles_sys      162905      162905      162905      162905
+    Kernel: __omp_offloading_2f_13046cf_main_l64
+          1                     fb_subp0_read_sectors         548         548         548         548
+          1                     fb_subp1_read_sectors         422         422         422         422
+          1                    fb_subp0_write_sectors       13398       13398       13398       13398
+          1                    fb_subp1_write_sectors       13739       13739       13739       13739
+          1              l2_subp0_write_sector_misses       13174       13174       13174       13174
+          1              l2_subp1_write_sector_misses       12919       12919       12919       12919
+          1               l2_subp0_read_sector_misses         492         492         492         492
+          1               l2_subp1_read_sector_misses         482         482         482         482
+          1          l2_subp0_read_tex_sector_queries        1728        1728        1728        1728
+          1          l2_subp1_read_tex_sector_queries        1740        1740        1740        1740
+          1         l2_subp0_write_tex_sector_queries       24640       24640       24640       24640
+          1         l2_subp1_write_tex_sector_queries       24640       24640       24640       24640
+          1             l2_subp0_read_tex_hit_sectors        1418        1418        1418        1418
+          1             l2_subp1_read_tex_hit_sectors        1423        1423        1423        1423
+          1            l2_subp0_write_tex_hit_sectors       12928       12928       12928       12928
+          1            l2_subp1_write_tex_hit_sectors       12928       12928       12928       12928
+          1        l2_subp0_total_read_sector_queries        2916        2916        2916        2916
+          1        l2_subp1_total_read_sector_queries        2284        2284        2284        2284
+          1       l2_subp0_total_write_sector_queries       24657       24657       24657       24657
+          1       l2_subp1_total_write_sector_queries       24674       24674       24674       24674
+          1       l2_subp0_read_sysmem_sector_queries         457         457         457         457
+          1       l2_subp1_read_sysmem_sector_queries           0           0           0           0
+          1      l2_subp0_write_sysmem_sector_queries           1           1           1           1
+          1      l2_subp1_write_sysmem_sector_queries           4           4           4           4
+          1                         elapsed_cycles_sm    13310660    13310660    13310660    13310660
+          1                           prof_trigger_00           0           0           0           0
+          1                           prof_trigger_01           0           0           0           0
+          1                           prof_trigger_02           0           0           0           0
+          1                           prof_trigger_03           0           0           0           0
+          1                           prof_trigger_04           0           0           0           0
+          1                           prof_trigger_05           0           0           0           0
+          1                           prof_trigger_06           0           0           0           0
+          1                           prof_trigger_07           0           0           0           0
+          1                            warps_launched          32          32          32          32
+          1                              inst_issued0     4741704     4741704     4741704     4741704
+          1                              inst_issued1      269100      269100      269100      269100
+          1                             inst_executed      796744      796744      796744      796744
+          1                      thread_inst_executed    25112192    25112192    25112192    25112192
+          1   not_predicated_off_thread_inst_executed    24301032    24301032    24301032    24301032
+          1                             active_cycles     1268725     1268725     1268725     1268725
+          1                              active_warps    10249436    10249436    10249436    10249436
+          1                               shared_atom           0           0           0           0
+          1                           sm_cta_launched           8           8           8           8
+          1                           shared_atom_cas           0           0           0           0
+          1                               shared_load           0           0           0           0
+          1                              shared_store           0           0           0           0
+          1                              generic_load       13184       13184       13184       13184
+          1                             generic_store        4520        4520        4520        4520
+          1                               global_load           0           0           0           0
+          1                              global_store           0           0           0           0
+          1                                local_load        4672        4672        4672        4672
+          1                               local_store        4736        4736        4736        4736
+          1                                atom_count           0           0           0           0
+          1                                gred_count           0           0           0           0
+          1                    shared_ld_transactions          96          96          96          96
+          1                    shared_st_transactions          72          72          72          72
+          1                   shared_ld_bank_conflict           0           0           0           0
+          1                   shared_st_bank_conflict           0           0           0           0
+          1                           global_atom_cas           0           0           0           0
+          1                          active_cycles_pm     1269065     1269065     1269065     1269065
+          1                           active_warps_pm     5011404     5011404     5011404     5011404
+          1                         elapsed_cycles_pm    13341376    13341376    13341376    13341376
+          1                inst_executed_fp16_pipe_s0           0           0           0           0
+          1                inst_executed_fp16_pipe_s1           0           0           0           0
+          1                inst_executed_fp16_pipe_s2           0           0           0           0
+          1                inst_executed_fp16_pipe_s3           0           0           0           0
+          1                inst_executed_fp64_pipe_s0         512         512         512         512
+          1                inst_executed_fp64_pipe_s1         512         512         512         512
+          1                inst_executed_fp64_pipe_s2         512         512         512         512
+          1                inst_executed_fp64_pipe_s3         512         512         512         512
+          1                 inst_executed_fma_pipe_s0        2856        2856        2856        2856
+          1                 inst_executed_fma_pipe_s1        2860        2860        2860        2860
+          1                 inst_executed_fma_pipe_s2        2860        2860        2860        2860
+          1                 inst_executed_fma_pipe_s3        2864        2864        2864        2864
+          1              tensor_pipe_active_cycles_s0           0           0           0           0
+          1              tensor_pipe_active_cycles_s1           0           0           0           0
+          1              tensor_pipe_active_cycles_s2           0           0           0           0
+          1              tensor_pipe_active_cycles_s3           0           0           0           0
+          1                      pcie_tx_active_pulse           0           0           0           0
+          1                      pcie_rx_active_pulse           0           0           0           0
+          1                         active_cycles_sys      153776      153776      153776      153776
+          1                        elapsed_cycles_sys      153776      153776      153776      153776
+
+==77949== Metric result:
+Invocations                               Metric Name                                               Metric Description         Min         Max         Avg
+Device "Tesla V100-SXM2-16GB (0)"
+    Kernel: __omp_offloading_2f_13046cf_main_l50
+          1                             inst_per_warp                                            Instructions per warp  2.4898e+04  2.4898e+04  2.4898e+04
+          1                         branch_efficiency                                                Branch Efficiency      99.68%      99.68%      99.68%
+          1                 warp_execution_efficiency                                        Warp Execution Efficiency      98.50%      98.50%      98.50%
+          1         warp_nonpred_execution_efficiency                         Warp Non-Predicated Execution Efficiency      95.31%      95.31%      95.31%
+          1                      inst_replay_overhead                                      Instruction Replay Overhead    0.000476    0.000476    0.000476
+          1      shared_load_transactions_per_request                      Shared Memory Load Transactions Per Request    1.000000    1.000000    1.000000
+          1     shared_store_transactions_per_request                     Shared Memory Store Transactions Per Request    1.000000    1.000000    1.000000
+          1       local_load_transactions_per_request                       Local Memory Load Transactions Per Request    4.000000    4.000000    4.000000
+          1      local_store_transactions_per_request                      Local Memory Store Transactions Per Request    4.000000    4.000000    4.000000
+          1              gld_transactions_per_request                             Global Load Transactions Per Request    4.294118    4.294118    4.294118
+          1              gst_transactions_per_request                            Global Store Transactions Per Request    8.000000    8.000000    8.000000
+          1                 shared_store_transactions                                        Shared Store Transactions          72          72          72
+          1                  shared_load_transactions                                         Shared Load Transactions          96          96          96
+          1                   local_load_transactions                                          Local Load Transactions       75392       75392       75392
+          1                  local_store_transactions                                         Local Store Transactions       49024       49024       49024
+          1                          gld_transactions                                         Global Load Transactions        9344        9344        9344
+          1                          gst_transactions                                        Global Store Transactions         256         256         256
+          1                  sysmem_read_transactions                                  System Memory Read Transactions           2           2           2
+          1                 sysmem_write_transactions                                 System Memory Write Transactions           5           5           5
+          1                      l2_read_transactions                                             L2 Read Transactions        5196        5196        5196
+          1                     l2_write_transactions                                            L2 Write Transactions       49305       49305       49305
+          1                    dram_read_transactions                                  Device Memory Read Transactions        1010        1010        1010
+          1                   dram_write_transactions                                 Device Memory Write Transactions       26562       26562       26562
+          1                           global_hit_rate                                Global Hit Rate in unified l1/tex      73.08%      73.08%      73.08%
+          1                            local_hit_rate                                                   Local Hit Rate      80.55%      80.55%      80.55%
+          1                  gld_requested_throughput                                 Requested Global Load Throughput  2.3158GB/s  2.3158GB/s  2.3158GB/s
+          1                  gst_requested_throughput                                Requested Global Store Throughput  71.724MB/s  71.724MB/s  71.724MB/s
+          1                            gld_throughput                                           Global Load Throughput  2.5566GB/s  2.5566GB/s  2.5566GB/s
+          1                            gst_throughput                                          Global Store Throughput  71.724MB/s  71.724MB/s  71.724MB/s
+          1                     local_memory_overhead                                            Local Memory Overhead      95.09%      95.09%      95.09%
+          1                        tex_cache_hit_rate                                           Unified Cache Hit Rate      60.74%      60.74%      60.74%
+          1                      l2_tex_read_hit_rate                                      L2 Hit Rate (Texture Reads)      80.96%      80.96%      80.96%
+          1                     l2_tex_write_hit_rate                                     L2 Hit Rate (Texture Writes)      52.47%      52.47%      52.47%
+          1                      dram_read_throughput                                    Device Memory Read Throughput  282.97MB/s  282.97MB/s  282.97MB/s
+          1                     dram_write_throughput                                   Device Memory Write Throughput  7.2675GB/s  7.2675GB/s  7.2675GB/s
+          1                      tex_cache_throughput                       Unified cache to Multiprocessor throughput  25.627GB/s  25.627GB/s  25.627GB/s
+          1                    l2_tex_read_throughput                                    L2 Throughput (Texture Reads)  935.78MB/s  935.78MB/s  935.78MB/s
+          1                   l2_tex_write_throughput                                   L2 Throughput (Texture Writes)  13.483GB/s  13.483GB/s  13.483GB/s
+          1                        l2_read_throughput                                            L2 Throughput (Reads)  1.4217GB/s  1.4217GB/s  1.4217GB/s
+          1                       l2_write_throughput                                           L2 Throughput (Writes)  13.490GB/s  13.490GB/s  13.490GB/s
+          1                    sysmem_read_throughput                                    System Memory Read Throughput  573.79KB/s  573.79KB/s  573.79KB/s
+          1                   sysmem_write_throughput                                   System Memory Write Throughput  1.4009MB/s  1.4009MB/s  1.4009MB/s
+          1                     local_load_throughput                                     Local Memory Load Throughput  20.628GB/s  20.628GB/s  20.628GB/s
+          1                    local_store_throughput                                    Local Memory Store Throughput  13.413GB/s  13.413GB/s  13.413GB/s
+          1                    shared_load_throughput                                    Shared Memory Load Throughput  107.59MB/s  107.59MB/s  107.59MB/s
+          1                   shared_store_throughput                                   Shared Memory Store Throughput  80.690MB/s  80.690MB/s  80.690MB/s
+          1                            gld_efficiency                                    Global Memory Load Efficiency      90.58%      90.58%      90.58%
+          1                            gst_efficiency                                   Global Memory Store Efficiency     100.00%     100.00%     100.00%
+          1                    tex_cache_transactions                     Unified cache to Multiprocessor transactions       23416       23416       23416
+          1                             flop_count_dp                      Floating Point Operations(Double Precision)       65536       65536       65536
+          1                         flop_count_dp_add                  Floating Point Operations(Double Precision Add)       32768       32768       32768
+          1                         flop_count_dp_fma                  Floating Point Operations(Double Precision FMA)           0           0           0
+          1                         flop_count_dp_mul                  Floating Point Operations(Double Precision Mul)       32768       32768       32768
+          1                             flop_count_sp                      Floating Point Operations(Single Precision)           0           0           0
+          1                         flop_count_sp_add                  Floating Point Operations(Single Precision Add)           0           0           0
+          1                         flop_count_sp_fma                  Floating Point Operations(Single Precision FMA)           0           0           0
+          1                         flop_count_sp_mul                   Floating Point Operation(Single Precision Mul)           0           0           0
+          1                     flop_count_sp_special              Floating Point Operations(Single Precision Special)        6144        6144        6144
+          1                             inst_executed                                            Instructions Executed      268968      268968      268968
+          1                               inst_issued                                              Instructions Issued      269096      269096      269096
+          1                          dram_utilization                                        Device Memory Utilization     Low (1)     Low (1)     Low (1)
+          1                        sysmem_utilization                                        System Memory Utilization     Low (1)     Low (1)     Low (1)
+          1                          stall_inst_fetch                         Issue Stall Reasons (Instructions Fetch)       4.23%       4.23%       4.23%
+          1                     stall_exec_dependency                       Issue Stall Reasons (Execution Dependency)      78.52%      78.52%      78.52%
+          1                   stall_memory_dependency                               Issue Stall Reasons (Data Request)      17.08%      17.08%      17.08%
+          1                             stall_texture                                    Issue Stall Reasons (Texture)       0.00%       0.00%       0.00%
+          1                                stall_sync                            Issue Stall Reasons (Synchronization)       0.02%       0.02%       0.02%
+          1                               stall_other                                      Issue Stall Reasons (Other)       0.00%       0.00%       0.00%
+          1          stall_constant_memory_dependency                         Issue Stall Reasons (Immediate constant)       0.15%       0.15%       0.15%
+          1                           stall_pipe_busy                                  Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                         shared_efficiency                                         Shared Memory Efficiency       1.34%       1.34%       1.34%
+          1                                inst_fp_32                                          FP Instructions(Single)        6144        6144        6144
+          1                                inst_fp_64                                          FP Instructions(Double)       65536       65536       65536
+          1                              inst_integer                                             Integer Instructions     2254104     2254104     2254104
+          1                          inst_bit_convert                                         Bit-Convert Instructions       12288       12288       12288
+          1                              inst_control                                        Control-Flow Instructions      302216      302216      302216
+          1                        inst_compute_ld_st                                          Load/Store Instructions      873512      873512      873512
+          1                                 inst_misc                                                Misc Instructions     4904032     4904032     4904032
+          1           inst_inter_thread_communication                                        Inter-Thread Instructions           0           0           0
+          1                               issue_slots                                                      Issue Slots      269096      269096      269096
+          1                                 cf_issued                                 Issued Control-Flow Instructions       13192       13192       13192
+          1                               cf_executed                               Executed Control-Flow Instructions       13192       13192       13192
+          1                               ldst_issued                                   Issued Load/Store Instructions       29888       29888       29888
+          1                             ldst_executed                                 Executed Load/Store Instructions       29888       29888       29888
+          1                       atomic_transactions                                              Atomic Transactions           0           0           0
+          1           atomic_transactions_per_request                                  Atomic Transactions Per Request    0.000000    0.000000    0.000000
+          1                      l2_atomic_throughput                                  L2 Throughput (Atomic requests)  0.00000B/s  0.00000B/s  0.00000B/s
+          1                    l2_atomic_transactions                                L2 Transactions (Atomic requests)           0           0           0
+          1                  l2_tex_read_transactions                                  L2 Transactions (Texture Reads)        3340        3340        3340
+          1                     stall_memory_throttle                            Issue Stall Reasons (Memory Throttle)       0.00%       0.00%       0.00%
+          1                        stall_not_selected                               Issue Stall Reasons (Not Selected)       0.00%       0.00%       0.00%
+          1                 l2_tex_write_transactions                                 L2 Transactions (Texture Writes)       49280       49280       49280
+          1             nvlink_total_data_transmitted                                    NVLink Total Data Transmitted        7712        7712        7712
+          1                nvlink_total_data_received                                       NVLink Total Data Received        5920        5920        5920
+          1              nvlink_user_data_transmitted                                     NVLink User Data Transmitted         832         832         832
+          1                 nvlink_user_data_received                                        NVLink User Data Received        2368        2368        2368
+          1          nvlink_overhead_data_transmitted                                 NVLink Overhead Data Transmitted      89.21%      89.21%      89.21%
+          1             nvlink_overhead_data_received                                    NVLink Overhead Data Received      60.00%      60.00%      60.00%
+          1      nvlink_total_nratom_data_transmitted                             NVLink Total Nratom Data Transmitted           0           0           0
+          1       nvlink_user_nratom_data_transmitted                              NVLink User Nratom Data Transmitted           0           0           0
+          1       nvlink_total_ratom_data_transmitted                              NVLink Total Ratom Data Transmitted           0           0           0
+          1        nvlink_user_ratom_data_transmitted                               NVLink User Ratom Data Transmitted           0           0           0
+          1       nvlink_total_write_data_transmitted                              NVLink Total Write Data Transmitted         576         576         576
+          1        nvlink_user_write_data_transmitted                               NVLink User Write Data Transmitted         192         192         192
+          1                nvlink_transmit_throughput                                       NVLink Transmit Throughput  67.522MB/s  67.522MB/s  67.522MB/s
+          1                 nvlink_receive_throughput                                        NVLink Receive Throughput  51.832MB/s  51.832MB/s  51.832MB/s
+          1       nvlink_total_response_data_received                              NVLink Total Response Data Received        3072        3072        3072
+          1        nvlink_user_response_data_received                               NVLink User Response Data Received        1920        1920        1920
+          1                             flop_count_hp                        Floating Point Operations(Half Precision)           0           0           0
+          1                         flop_count_hp_add                    Floating Point Operations(Half Precision Add)           0           0           0
+          1                         flop_count_hp_mul                     Floating Point Operation(Half Precision Mul)           0           0           0
+          1                         flop_count_hp_fma                    Floating Point Operations(Half Precision FMA)           0           0           0
+          1                                inst_fp_16                                            HP Instructions(Half)           0           0           0
+          1                                       ipc                                                     Executed IPC    0.302372    0.302372    0.302372
+          1                                issued_ipc                                                       Issued IPC    0.212746    0.212746    0.212746
+          1                    issue_slot_utilization                                           Issue Slot Utilization       5.32%       5.32%       5.32%
+          1                             sm_efficiency                                          Multiprocessor Activity       9.86%       9.86%       9.86%
+          1                        achieved_occupancy                                               Achieved Occupancy    0.062430    0.062430    0.062430
+          1                  eligible_warps_per_cycle                                  Eligible Warps Per Active Cycle    0.212746    0.212746    0.212746
+          1                        shared_utilization                                        Shared Memory Utilization     Low (1)     Low (1)     Low (1)
+          1                            l2_utilization                                             L2 Cache Utilization     Low (1)     Low (1)     Low (1)
+          1                           tex_utilization                                        Unified Cache Utilization     Low (1)     Low (1)     Low (1)
+          1                       ldst_fu_utilization                             Load/Store Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1                         cf_fu_utilization                           Control-Flow Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1                        tex_fu_utilization                                Texture Function Unit Utilization    Idle (0)    Idle (0)    Idle (0)
+          1                    special_fu_utilization                                Special Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1             half_precision_fu_utilization                         Half-Precision Function Unit Utilization    Idle (0)    Idle (0)    Idle (0)
+          1           single_precision_fu_utilization                       Single-Precision Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1           double_precision_fu_utilization                       Double-Precision Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1                        flop_hp_efficiency                                       FLOP Efficiency(Peak Half)       0.00%       0.00%       0.00%
+          1                        flop_sp_efficiency                                     FLOP Efficiency(Peak Single)       0.00%       0.00%       0.00%
+          1                        flop_dp_efficiency                                     FLOP Efficiency(Peak Double)       0.01%       0.01%       0.01%
+          1                   sysmem_read_utilization                                   System Memory Read Utilization     Low (1)     Low (1)     Low (1)
+          1                  sysmem_write_utilization                                  System Memory Write Utilization     Low (1)     Low (1)     Low (1)
+          1       nvlink_data_transmission_efficiency                              NVLink Data Transmission Efficiency       0.02%       0.02%       0.02%
+          1            nvlink_data_receive_efficiency                                   NVLink Data Receive Efficiency       0.01%       0.01%       0.01%
+          1                            stall_sleeping                                   Issue Stall Reasons (Sleeping)       0.00%       0.00%       0.00%
+          1               pcie_total_data_transmitted                                      PCIe Total Data Transmitted           0           0           0
+          1                  pcie_total_data_received                                         PCIe Total Data Received           0           0           0
+          1                inst_executed_global_loads                         Warp level instructions for global loads        2176        2176        2176
+          1                 inst_executed_local_loads                          Warp level instructions for local loads       18848       18848       18848
+          1                inst_executed_shared_loads                         Warp level instructions for shared loads          96          96          96
+          1               inst_executed_surface_loads                        Warp level instructions for surface loads           0           0           0
+          1               inst_executed_global_stores                        Warp level instructions for global stores          32          32          32
+          1                inst_executed_local_stores                         Warp level instructions for local stores       12256       12256       12256
+          1               inst_executed_shared_stores                        Warp level instructions for shared stores          72          72          72
+          1              inst_executed_surface_stores                       Warp level instructions for surface stores           0           0           0
+          1              inst_executed_global_atomics             Warp level instructions for global atom and atom cas           0           0           0
+          1           inst_executed_global_reductions                    Warp level instructions for global reductions           0           0           0
+          1             inst_executed_surface_atomics            Warp level instructions for surface atom and atom cas           0           0           0
+          1          inst_executed_surface_reductions                   Warp level instructions for surface reductions           0           0           0
+          1              inst_executed_shared_atomics             Warp level shared instructions for atom and atom CAS           0           0           0
+          1                     inst_executed_tex_ops                              Warp level instructions for texture           0           0           0
+          1                           dram_read_bytes                           Total bytes read from DRAM to L2 cache       32320       32320       32320
+          1                          dram_write_bytes                        Total bytes written from L2 cache to DRAM      849984      849984      849984
+          1                      global_load_requests         Total number of global load requests from Multiprocessor        2176        2176        2176
+          1                       local_load_requests          Total number of local load requests from Multiprocessor       18848       18848       18848
+          1                     surface_load_requests        Total number of surface load requests from Multiprocessor           0           0           0
+          1                     global_store_requests        Total number of global store requests from Multiprocessor          32          32          32
+          1                      local_store_requests         Total number of local store requests from Multiprocessor       12256       12256       12256
+          1                    surface_store_requests       Total number of surface store requests from Multiprocessor           0           0           0
+          1                    global_atomic_requests       Total number of global atomic requests from Multiprocessor           0           0           0
+          1                 global_reduction_requests    Total number of global reduction requests from Multiprocessor           0           0           0
+          1                   surface_atomic_requests      Total number of surface atomic requests from Multiprocessor           0           0           0
+          1                surface_reduction_requests   Total number of surface reduction requests from Multiprocessor           0           0           0
+          1                      l2_global_load_bytes             Bytes read from L2 for misses in L1 for global loads       74496       74496       74496
+          1                       l2_local_load_bytes              Bytes read from L2 for misses in L1 for local loads       32896       32896       32896
+          1                     l2_surface_load_bytes            Bytes read from L2 for misses in L1 for surface loads           0           0           0
+          1              l2_global_atomic_store_bytes                   Bytes written to L2 from L1 for global atomics           0           0           0
+          1               l2_local_global_store_bytes         Bytes written to L2 from L1 for local and global stores.     1576960     1576960     1576960
+          1                    l2_surface_store_bytes           Bytes read from L2 for misses in L1 for surface stores           0           0           0
+          1                         sysmem_read_bytes                                         System Memory Read Bytes          64          64          64
+          1                        sysmem_write_bytes                                        System Memory Write Bytes         160         160         160
+          1                           l2_tex_hit_rate                                                L2 Cache Hit Rate      54.28%      54.28%      54.28%
+          1                     texture_load_requests        Total number of texture Load requests from Multiprocessor           0           0           0
+          1           tensor_precision_fu_utilization                       Tensor-Precision Function Unit Utilization    Idle (0)    Idle (0)    Idle (0)
+    Kernel: __omp_offloading_2f_13046cf_main_l64
+          1                             inst_per_warp                                            Instructions per warp  2.4898e+04  2.4898e+04  2.4898e+04
+          1                         branch_efficiency                                                Branch Efficiency      99.68%      99.68%      99.68%
+          1                 warp_execution_efficiency                                        Warp Execution Efficiency      98.50%      98.50%      98.50%
+          1         warp_nonpred_execution_efficiency                         Warp Non-Predicated Execution Efficiency      95.31%      95.31%      95.31%
+          1                      inst_replay_overhead                                      Instruction Replay Overhead    0.000521    0.000521    0.000521
+          1      shared_load_transactions_per_request                      Shared Memory Load Transactions Per Request    1.000000    1.000000    1.000000
+          1     shared_store_transactions_per_request                     Shared Memory Store Transactions Per Request    1.000000    1.000000    1.000000
+          1       local_load_transactions_per_request                       Local Memory Load Transactions Per Request    4.000000    4.000000    4.000000
+          1      local_store_transactions_per_request                      Local Memory Store Transactions Per Request    4.000000    4.000000    4.000000
+          1              gld_transactions_per_request                             Global Load Transactions Per Request    4.294118    4.294118    4.294118
+          1              gst_transactions_per_request                            Global Store Transactions Per Request    8.000000    8.000000    8.000000
+          1                 shared_store_transactions                                        Shared Store Transactions          72          72          72
+          1                  shared_load_transactions                                         Shared Load Transactions          96          96          96
+          1                   local_load_transactions                                          Local Load Transactions       75392       75392       75392
+          1                  local_store_transactions                                         Local Store Transactions       49024       49024       49024
+          1                          gld_transactions                                         Global Load Transactions        9344        9344        9344
+          1                          gst_transactions                                        Global Store Transactions         256         256         256
+          1                  sysmem_read_transactions                                  System Memory Read Transactions           2           2           2
+          1                 sysmem_write_transactions                                 System Memory Write Transactions           5           5           5
+          1                      l2_read_transactions                                             L2 Read Transactions        5200        5200        5200
+          1                     l2_write_transactions                                            L2 Write Transactions       49331       49331       49331
+          1                    dram_read_transactions                                  Device Memory Read Transactions         974         974         974
+          1                   dram_write_transactions                                 Device Memory Write Transactions       26093       26093       26093
+          1                           global_hit_rate                                Global Hit Rate in unified l1/tex      73.08%      73.08%      73.08%
+          1                            local_hit_rate                                                   Local Hit Rate      80.45%      80.45%      80.45%
+          1                  gld_requested_throughput                                 Requested Global Load Throughput  2.3139GB/s  2.3139GB/s  2.3139GB/s
+          1                  gst_requested_throughput                                Requested Global Store Throughput  71.664MB/s  71.664MB/s  71.664MB/s
+          1                            gld_throughput                                           Global Load Throughput  2.5544GB/s  2.5544GB/s  2.5544GB/s
+          1                            gst_throughput                                          Global Store Throughput  71.664MB/s  71.664MB/s  71.664MB/s
+          1                     local_memory_overhead                                            Local Memory Overhead      95.10%      95.10%      95.10%
+          1                        tex_cache_hit_rate                                           Unified Cache Hit Rate      60.64%      60.64%      60.64%
+          1                      l2_tex_read_hit_rate                                      L2 Hit Rate (Texture Reads)      81.92%      81.92%      81.92%
+          1                     l2_tex_write_hit_rate                                     L2 Hit Rate (Texture Writes)      52.47%      52.47%      52.47%
+          1                      dram_read_throughput                                    Device Memory Read Throughput  272.66MB/s  272.66MB/s  272.66MB/s
+          1                     dram_write_throughput                                   Device Memory Write Throughput  7.1332GB/s  7.1332GB/s  7.1332GB/s
+          1                      tex_cache_throughput                       Unified cache to Multiprocessor throughput  25.605GB/s  25.605GB/s  25.605GB/s
+          1                    l2_tex_read_throughput                                    L2 Throughput (Texture Reads)  970.82MB/s  970.82MB/s  970.82MB/s
+          1                   l2_tex_write_throughput                                   L2 Throughput (Texture Writes)  13.472GB/s  13.472GB/s  13.472GB/s
+          1                        l2_read_throughput                                            L2 Throughput (Reads)  1.4216GB/s  1.4216GB/s  1.4216GB/s
+          1                       l2_write_throughput                                           L2 Throughput (Writes)  13.486GB/s  13.486GB/s  13.486GB/s
+          1                    sysmem_read_throughput                                    System Memory Read Throughput  573.31KB/s  573.31KB/s  573.30KB/s
+          1                   sysmem_write_throughput                                   System Memory Write Throughput  1.3997MB/s  1.3997MB/s  1.3997MB/s
+          1                     local_load_throughput                                     Local Memory Load Throughput  20.610GB/s  20.610GB/s  20.610GB/s
+          1                    local_store_throughput                                    Local Memory Store Throughput  13.402GB/s  13.402GB/s  13.402GB/s
+          1                    shared_load_throughput                                    Shared Memory Load Throughput  107.50MB/s  107.50MB/s  107.50MB/s
+          1                   shared_store_throughput                                   Shared Memory Store Throughput  80.622MB/s  80.622MB/s  80.622MB/s
+          1                            gld_efficiency                                    Global Memory Load Efficiency      90.58%      90.58%      90.58%
+          1                            gst_efficiency                                   Global Memory Store Efficiency     100.00%     100.00%     100.00%
+          1                    tex_cache_transactions                     Unified cache to Multiprocessor transactions       23416       23416       23416
+          1                             flop_count_dp                      Floating Point Operations(Double Precision)       65536       65536       65536
+          1                         flop_count_dp_add                  Floating Point Operations(Double Precision Add)       32768       32768       32768
+          1                         flop_count_dp_fma                  Floating Point Operations(Double Precision FMA)           0           0           0
+          1                         flop_count_dp_mul                  Floating Point Operations(Double Precision Mul)       32768       32768       32768
+          1                             flop_count_sp                      Floating Point Operations(Single Precision)           0           0           0
+          1                         flop_count_sp_add                  Floating Point Operations(Single Precision Add)           0           0           0
+          1                         flop_count_sp_fma                  Floating Point Operations(Single Precision FMA)           0           0           0
+          1                         flop_count_sp_mul                   Floating Point Operation(Single Precision Mul)           0           0           0
+          1                     flop_count_sp_special              Floating Point Operations(Single Precision Special)        6144        6144        6144
+          1                             inst_executed                                            Instructions Executed      796744      796744      796744
+          1                               inst_issued                                              Instructions Issued      269100      269100      269100
+          1                          dram_utilization                                        Device Memory Utilization     Low (1)     Low (1)     Low (1)
+          1                        sysmem_utilization                                        System Memory Utilization     Low (1)     Low (1)     Low (1)
+          1                          stall_inst_fetch                         Issue Stall Reasons (Instructions Fetch)       4.26%       4.26%       4.26%
+          1                     stall_exec_dependency                       Issue Stall Reasons (Execution Dependency)      78.53%      78.53%      78.53%
+          1                   stall_memory_dependency                               Issue Stall Reasons (Data Request)      17.00%      17.00%      17.00%
+          1                             stall_texture                                    Issue Stall Reasons (Texture)       0.00%       0.00%       0.00%
+          1                                stall_sync                            Issue Stall Reasons (Synchronization)       0.05%       0.05%       0.05%
+          1                               stall_other                                      Issue Stall Reasons (Other)       0.01%       0.01%       0.01%
+          1          stall_constant_memory_dependency                         Issue Stall Reasons (Immediate constant)       0.15%       0.15%       0.15%
+          1                           stall_pipe_busy                                  Issue Stall Reasons (Pipe Busy)       0.00%       0.00%       0.00%
+          1                         shared_efficiency                                         Shared Memory Efficiency       1.34%       1.34%       1.34%
+          1                                inst_fp_32                                          FP Instructions(Single)        6144        6144        6144
+          1                                inst_fp_64                                          FP Instructions(Double)       65536       65536       65536
+          1                              inst_integer                                             Integer Instructions     2254104     2254104     2254104
+          1                          inst_bit_convert                                         Bit-Convert Instructions       12288       12288       12288
+          1                              inst_control                                        Control-Flow Instructions      302216      302216      302216
+          1                        inst_compute_ld_st                                          Load/Store Instructions      873512      873512      873512
+          1                                 inst_misc                                                Misc Instructions     4904032     4904032     4904032
+          1           inst_inter_thread_communication                                        Inter-Thread Instructions           0           0           0
+          1                               issue_slots                                                      Issue Slots      269100      269100      269100
+          1                                 cf_issued                                 Issued Control-Flow Instructions       13192       13192       13192
+          1                               cf_executed                               Executed Control-Flow Instructions       13192       13192       13192
+          1                               ldst_issued                                   Issued Load/Store Instructions       29888       29888       29888
+          1                             ldst_executed                                 Executed Load/Store Instructions       29888       29888       29888
+          1                       atomic_transactions                                              Atomic Transactions           0           0           0
+          1           atomic_transactions_per_request                                  Atomic Transactions Per Request    0.000000    0.000000    0.000000
+          1                      l2_atomic_throughput                                  L2 Throughput (Atomic requests)  0.00000B/s  0.00000B/s  0.00000B/s
+          1                    l2_atomic_transactions                                L2 Transactions (Atomic requests)           0           0           0
+          1                  l2_tex_read_transactions                                  L2 Transactions (Texture Reads)        3468        3468        3468
+          1                     stall_memory_throttle                            Issue Stall Reasons (Memory Throttle)       0.00%       0.00%       0.00%
+          1                        stall_not_selected                               Issue Stall Reasons (Not Selected)       0.00%       0.00%       0.00%
+          1                 l2_tex_write_transactions                                 L2 Transactions (Texture Writes)       49280       49280       49280
+          1             nvlink_total_data_transmitted                                    NVLink Total Data Transmitted        7408        7408        7408
+          1                nvlink_total_data_received                                       NVLink Total Data Received        5632        5632        5632
+          1              nvlink_user_data_transmitted                                     NVLink User Data Transmitted         832         832         832
+          1                 nvlink_user_data_received                                        NVLink User Data Received        2240        2240        2240
+          1          nvlink_overhead_data_transmitted                                 NVLink Overhead Data Transmitted      88.77%      88.77%      88.77%
+          1             nvlink_overhead_data_received                                    NVLink Overhead Data Received      60.23%      60.23%      60.23%
+          1      nvlink_total_nratom_data_transmitted                             NVLink Total Nratom Data Transmitted           0           0           0
+          1       nvlink_user_nratom_data_transmitted                              NVLink User Nratom Data Transmitted           0           0           0
+          1       nvlink_total_ratom_data_transmitted                              NVLink Total Ratom Data Transmitted           0           0           0
+          1        nvlink_user_ratom_data_transmitted                               NVLink User Ratom Data Transmitted           0           0           0
+          1       nvlink_total_write_data_transmitted                              NVLink Total Write Data Transmitted         576         576         576
+          1        nvlink_user_write_data_transmitted                               NVLink User Write Data Transmitted         192         192         192
+          1                nvlink_transmit_throughput                                       NVLink Transmit Throughput  64.805MB/s  64.805MB/s  64.805MB/s
+          1                 nvlink_receive_throughput                                        NVLink Receive Throughput  49.269MB/s  49.269MB/s  49.269MB/s
+          1       nvlink_total_response_data_received                              NVLink Total Response Data Received        3712        3712        3712
+          1        nvlink_user_response_data_received                               NVLink User Response Data Received        2432        2432        2432
+          1                             flop_count_hp                        Floating Point Operations(Half Precision)           0           0           0
+          1                         flop_count_hp_add                    Floating Point Operations(Half Precision Add)           0           0           0
+          1                         flop_count_hp_mul                     Floating Point Operation(Half Precision Mul)           0           0           0
+          1                         flop_count_hp_fma                    Floating Point Operations(Half Precision FMA)           0           0           0
+          1                                inst_fp_16                                            HP Instructions(Half)           0           0           0
+          1                                       ipc                                                     Executed IPC    0.210592    0.210592    0.210592
+          1                                issued_ipc                                                       Issued IPC    0.210702    0.210702    0.210702
+          1                    issue_slot_utilization                                           Issue Slot Utilization       5.27%       5.27%       5.27%
+          1                             sm_efficiency                                          Multiprocessor Activity       9.52%       9.52%       9.52%
+          1                        achieved_occupancy                                               Achieved Occupancy    0.062298    0.062298    0.062298
+          1                  eligible_warps_per_cycle                                  Eligible Warps Per Active Cycle    0.212103    0.212103    0.212103
+          1                        shared_utilization                                        Shared Memory Utilization     Low (1)     Low (1)     Low (1)
+          1                            l2_utilization                                             L2 Cache Utilization     Low (1)     Low (1)     Low (1)
+          1                           tex_utilization                                        Unified Cache Utilization     Low (1)     Low (1)     Low (1)
+          1                       ldst_fu_utilization                             Load/Store Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1                         cf_fu_utilization                           Control-Flow Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1                        tex_fu_utilization                                Texture Function Unit Utilization    Idle (0)    Idle (0)    Idle (0)
+          1                    special_fu_utilization                                Special Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1             half_precision_fu_utilization                         Half-Precision Function Unit Utilization    Idle (0)    Idle (0)    Idle (0)
+          1           single_precision_fu_utilization                       Single-Precision Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1           double_precision_fu_utilization                       Double-Precision Function Unit Utilization     Low (1)     Low (1)     Low (1)
+          1                        flop_hp_efficiency                                       FLOP Efficiency(Peak Half)       0.00%       0.00%       0.00%
+          1                        flop_sp_efficiency                                     FLOP Efficiency(Peak Single)       0.00%       0.00%       0.00%
+          1                        flop_dp_efficiency                                     FLOP Efficiency(Peak Double)       0.01%       0.01%       0.01%
+          1                   sysmem_read_utilization                                   System Memory Read Utilization     Low (1)     Low (1)     Low (1)
+          1                  sysmem_write_utilization                                  System Memory Write Utilization     Low (1)     Low (1)     Low (1)
+          1       nvlink_data_transmission_efficiency                              NVLink Data Transmission Efficiency       0.02%       0.02%       0.02%
+          1            nvlink_data_receive_efficiency                                   NVLink Data Receive Efficiency       0.01%       0.01%       0.01%
+          1                            stall_sleeping                                   Issue Stall Reasons (Sleeping)       0.00%       0.00%       0.00%
+          1               pcie_total_data_transmitted                                      PCIe Total Data Transmitted           0           0           0
+          1                  pcie_total_data_received                                         PCIe Total Data Received           0           0           0
+          1                inst_executed_global_loads                         Warp level instructions for global loads        2176        2176        2176
+          1                 inst_executed_local_loads                          Warp level instructions for local loads       18848       18848       18848
+          1                inst_executed_shared_loads                         Warp level instructions for shared loads          96          96          96
+          1               inst_executed_surface_loads                        Warp level instructions for surface loads           0           0           0
+          1               inst_executed_global_stores                        Warp level instructions for global stores          32          32          32
+          1                inst_executed_local_stores                         Warp level instructions for local stores       12256       12256       12256
+          1               inst_executed_shared_stores                        Warp level instructions for shared stores          72          72          72
+          1              inst_executed_surface_stores                       Warp level instructions for surface stores           0           0           0
+          1              inst_executed_global_atomics             Warp level instructions for global atom and atom cas           0           0           0
+          1           inst_executed_global_reductions                    Warp level instructions for global reductions           0           0           0
+          1             inst_executed_surface_atomics            Warp level instructions for surface atom and atom cas           0           0           0
+          1          inst_executed_surface_reductions                   Warp level instructions for surface reductions           0           0           0
+          1              inst_executed_shared_atomics             Warp level shared instructions for atom and atom CAS           0           0           0
+          1                     inst_executed_tex_ops                              Warp level instructions for texture           0           0           0
+          1                           dram_read_bytes                           Total bytes read from DRAM to L2 cache       31168       31168       31168
+          1                          dram_write_bytes                        Total bytes written from L2 cache to DRAM      834976      834976      834976
+          1                      global_load_requests         Total number of global load requests from Multiprocessor        2176        2176        2176
+          1                       local_load_requests          Total number of local load requests from Multiprocessor       18848       18848       18848
+          1                     surface_load_requests        Total number of surface load requests from Multiprocessor           0           0           0
+          1                     global_store_requests        Total number of global store requests from Multiprocessor          32          32          32
+          1                      local_store_requests         Total number of local store requests from Multiprocessor       12256       12256       12256
+          1                    surface_store_requests       Total number of surface store requests from Multiprocessor           0           0           0
+          1                    global_atomic_requests       Total number of global atomic requests from Multiprocessor           0           0           0
+          1                 global_reduction_requests    Total number of global reduction requests from Multiprocessor           0           0           0
+          1                   surface_atomic_requests      Total number of surface atomic requests from Multiprocessor           0           0           0
+          1                surface_reduction_requests   Total number of surface reduction requests from Multiprocessor           0           0           0
+          1                      l2_global_load_bytes             Bytes read from L2 for misses in L1 for global loads       74496       74496       74496
+          1                       l2_local_load_bytes              Bytes read from L2 for misses in L1 for local loads       36992       36992       36992
+          1                     l2_surface_load_bytes            Bytes read from L2 for misses in L1 for surface loads           0           0           0
+          1              l2_global_atomic_store_bytes                   Bytes written to L2 from L1 for global atomics           0           0           0
+          1               l2_local_global_store_bytes         Bytes written to L2 from L1 for local and global stores.     1576960     1576960     1576960
+          1                    l2_surface_store_bytes           Bytes read from L2 for misses in L1 for surface stores           0           0           0
+          1                         sysmem_read_bytes                                         System Memory Read Bytes          64          64          64
+          1                        sysmem_write_bytes                                        System Memory Write Bytes         160         160         160
+          1                           l2_tex_hit_rate                                                L2 Cache Hit Rate      54.40%      54.40%      54.40%
+          1                     texture_load_requests        Total number of texture Load requests from Multiprocessor           0           0           0
+          1           tensor_precision_fu_utilization                       Tensor-Precision Function Unit Utilization    Idle (0)    Idle (0)    Idle (0)
