@@ -1,8 +1,8 @@
 App, thread, inputdata, exetime 
-saxpy_offload,4,default,1.470536
-saxpy_offload,8,default,1.462643
-saxpy_offload,16,default,1.515151
-saxpy_offload,32,default,1.532267
-saxpy_offload,64,default,1.533938
-saxpy_offload,128,default,1.463140
-saxpy_offload,256,default,1.459055
+saxpy_offload,4,default,54.306588
+saxpy_offload,8,default,54.302918
+saxpy_offload,16,default,54.259465
+saxpy_offload,32,default,54.279403
+saxpy_offload,64,default,54.289402
+saxpy_offload,128,default,54.243299
+saxpy_offload,256,default,54.236728
