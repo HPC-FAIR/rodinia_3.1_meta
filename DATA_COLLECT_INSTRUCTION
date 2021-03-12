@@ -1,0 +1,15 @@
+1. Compliation:
+   Makefile is available in each benchmark with 3 rules: original, GPU offloading, OMP metadirective. (NOTE: some might not have all the implementations ready) 
+   Example: BFS
+     Original: make bfs
+     GPU offloading: make bfs_offload
+     metadirective (still WIP): make bfs_offload_meta    
+
+2. Run Experiments
+  1. Original on CPU:  run_variant.sh uses vtune to collect threading and hpc-performance related metrics. Output, profiled data and summary in text format, are written to ${APPName}-log directory.
+  2. GPU ffloading: run_GPU_variats.sh uses nvproof to collect all available metrics.  Output, summary in csv file, is written to ${APPName}-log directory.
+
+3. Data Processing
+  1. GPU data processing: scrpts/extractGPUTrace.py
+     Combined all measurements into a single CSV file with all the collectable metrics and events.
+     example: cd bfs/bfs_offload-log; python3 ../../../scripts/extractGPUTrace.py
